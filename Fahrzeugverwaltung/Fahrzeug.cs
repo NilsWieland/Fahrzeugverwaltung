@@ -90,14 +90,7 @@ namespace Fahrzeugverwaltung
 
         public void print_alleFahrzeugdaten()
         {
-            Console.WriteLine(Hersteller);
-            Console.WriteLine(Modell);
-            Console.WriteLine(Kennzeichen);
-            Console.WriteLine(JahrErstzulassung);
-            Console.WriteLine(Anschaffungspreis);
-            Console.WriteLine(Parkhausindex);
-            Console.WriteLine(Stellplatzindex);
-
+            
         }
         
     }

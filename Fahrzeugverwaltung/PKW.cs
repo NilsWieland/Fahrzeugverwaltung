@@ -11,5 +11,37 @@ namespace Fahrzeugverwaltung
         private int HubraumPKW;
         private int Leistung;
         private int Schadstoffklasse;
+
+
+        public int get_HubraumPKW()
+        {
+            return HubraumPKW;
+        }
+
+        public int get_Leistung()
+        {
+            return Leistung;
+        }
+
+        public int get_Schadstoffklasse()
+        {
+            return Schadstoffklasse;
+        }
+
+        public void set_HubraumPKW()
+        {
+
+        }
+
+        public void set_Lesitung()
+        {
+
+        }
+
+        public void set_Schadstoffklasse()
+        {
+
+        }
+
     }
 }

@@ -9,5 +9,16 @@ namespace Fahrzeugverwaltung
     public class Motorrad:Fahrzeug
     {
         private int HubraumMotorrad;
+
+
+        public int get_HubraumMotorrad()
+        {
+            return HubraumMotorrad;
+        }
+
+        public void set_HubraumMotorrad()
+        {
+
+        }
     }
 }

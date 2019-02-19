@@ -10,5 +10,8 @@ namespace Fahrzeugverwaltung
     {
         private int AnzahlParkhäuser;
         private int AnzahlFahrzeuge;
+
+       
+        
     }
 }
