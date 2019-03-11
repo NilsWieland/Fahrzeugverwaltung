@@ -6,19 +6,27 @@ using System.Threading.Tasks;
 
 namespace Fahrzeugverwaltung
 {
-    public class Motorrad:Fahrzeug
+    // Motorradklasse
+    public class Motorrad : Fahrzeug
     {
-        private int HubraumMotorrad;
-
-
-        public int get_HubraumMotorrad()
+        // Typ ist immer Motorrad
+        public override string Typ
         {
-            return HubraumMotorrad;
+            get
+            {
+                return "Motorrad";
+            }
         }
 
-        public void set_HubraumMotorrad()
-        {
+        // Hubraum in Kubikcentimeter
+        public int Hubraum { get; }
 
+        // Konstruktor
+        // Ruft Konstruktor der Basisklasse auf
+        public Motorrad(string pHersteller, string pModell, int pJahrErstzulassung, float pAnschaffungspreis, string pKennzeichen, int pHubraum) :
+               base(pHersteller, pModell, pJahrErstzulassung, pAnschaffungspreis, pKennzeichen)
+        {
+            Hubraum = pHubraum;
         }
     }
 }

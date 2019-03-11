@@ -7,92 +7,34 @@ using System.Threading.Tasks;
 namespace Fahrzeugverwaltung
 {
     public abstract class Fahrzeug
-        
     {
-        private string Hersteller;
-        private string Modell;
-        private string Kennzeichen;
-        private int JahrErstzulassung;
-        private float Anschaffungspreis;
-        private int Parkhausindex;
-        private int Stellplatzindex;
+        // Typ des Fahrzeugs (PKW, LKW, Motorrad)
+        public virtual string Typ { get; }
 
-        public string get_Hersteller()
+        // Hersteller (VW, Ford, ...)
+        public string Hersteller { get; }
+
+        // Modell (Golf, Passat, ...)
+        public string Modell { get; }
+
+        // Jahr der Erstzulassung
+        public int Erstzulassung { get; }
+
+        // Anschaffungspreis 
+        public float Anschaffungspreis { get; }
+
+        // Fahrzeugkennzeichen
+        public string Kennzeichen { get; }
+
+        // Konstruktor der Basisklasse
+        // Wird nur von den Konstruktoren der abgeleiteten Klassen aufgerufen
+        public Fahrzeug(string pHersteller, string pModell, int pErstzulassung, float pAnschaffungspreis, string pKennzeichen)
         {
-            return Hersteller;
+            Hersteller = pHersteller;
+            Modell = pModell;
+            Erstzulassung = pErstzulassung;
+            Anschaffungspreis = pAnschaffungspreis;
+            Kennzeichen = pKennzeichen;
         }
-
-        public string get_Modell()
-        {
-            return Modell;
-        }
-
-        public string get_Kennzeichen()
-        {
-            return Kennzeichen;
-        }
-
-        public int get_JahrErstzulassung()
-        {
-            return JahrErstzulassung;
-        }
-
-        public float get_Anschaffungspreis ()
-        {
-            return Anschaffungspreis;
-        }
-
-        public int get_Parkhausindex()
-        {
-            return Parkhausindex;
-        }
-
-        public int get_Stellplatzindex()
-        {
-            return Stellplatzindex;
-        }
-
-
-        public void set_Hersteller()
-        {
-
-        }
-
-        public void set_Modell()
-        {
-
-        }
-
-        public void set_Kennzeichen()
-        {
-
-        }
-
-        public void set_JahrErstzulassung()
-        {
-
-        }
-
-        public void set_Anschaffungspreis()
-        {
-
-        }
-
-        public void set_Parkhausindex()
-        {
-
-        }
-
-        public void set_Stellplatzindex()
-        {
-
-        }
-
-        public void print_alleFahrzeugdaten()
-        {
-            
-        }
-        
     }
-    
 }

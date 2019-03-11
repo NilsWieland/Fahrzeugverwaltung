@@ -6,64 +6,64 @@ using System.Threading.Tasks;
 
 namespace Fahrzeugverwaltung
 {
-    class Parkhaus
+    // Klasse Parkhaus
+    public class Parkhaus
     {
-        private string Ort;
-        private string PLZ;
-        private string Straße;
-        private int AnzahlStellplätze;
+        // Adresse Parkhaus
+        public string Ort { get; }
+        public string PLZ { get; }
+        public string Strasse { get; }
 
-       public string get_Ort()
+        // Anzahl der Stellplaetze
+        public int AnzahlStellplaetze { get; }
+        
+        // Array mit Stellplatzobjekten
+        public Stellplatz[] StellPlaetze { get; }
+
+        // Konstruktor
+        public Parkhaus(int pAnzahlStellplaetze, string pPLZ, string pOrt, string pStrasse)
         {
-            return Ort;
+            Ort = pOrt;
+            PLZ = pPLZ;
+            Strasse = pStrasse;
+
+            AnzahlStellplaetze = pAnzahlStellplaetze;
+            
+            // Array mit Stellplaetzen erzeugen
+            StellPlaetze = new Stellplatz[AnzahlStellplaetze];
+            for (int idx = 0; idx < AnzahlStellplaetze; idx++)
+            {
+                StellPlaetze[idx] = new Stellplatz(idx + 1);
+            }
         }
 
-        public string get_PLZ()
+        // Gibt die Anzahl der Stellpätze eines Typs (PKW, LKW, Motorrad) zurück
+        public int AnzahlStellplaetze_Typ(string typ)
         {
-            return PLZ;
+            int count = 0;
+            for (int idx = 0; idx < AnzahlStellplaetze; idx++)
+            {
+                if (StellPlaetze[idx].Typ == typ)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
-        public string get_Straße()
+        // Gibt die Anzahl der belegten PKW, LKW oder Motorrad Stellpätze zurück
+        public int AnzahlStellplaetze_Belegt_Typ(string typ)
         {
-            return Straße;
+            int count = 0;
+            for (int idx = 0; idx < AnzahlStellplaetze; idx++)
+            {
+                if ((StellPlaetze[idx].Typ == typ) && (StellPlaetze[idx].FreierStellplatz() == false))
+                {
+                    count++;
+                }
+            }
+            return count;
         }
-
-        public int get_AnzahlStellplätze()
-        {
-            return AnzahlStellplätze;
-        }
-
-        public void set_Ort()
-        {
-
-        }
-
-        public void set_PLZ()
-        {
-
-        }
-
-        public void set_Straße()
-        {
-
-        }
-
-        public void set_AnzahlStellplätze()
-        {
-
-        }
-
-        public void findeFreienStellplatz()
-        {
-
-        }
-
-
-
-
-
-
-
-
     }
+
 }

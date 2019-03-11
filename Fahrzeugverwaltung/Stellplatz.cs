@@ -6,42 +6,30 @@ using System.Threading.Tasks;
 
 namespace Fahrzeugverwaltung
 {
-    class Stellplatz
+    // Klasse Stellplatz
+    public class Stellplatz
     {
-        private int StellplatzNummer;
-        private string Type;
-        private string Kennzeichen;
+        // Typ des Stellplatzes (PKW, LKW, Motorrad)
+        public string Typ { get; set; }
 
+        // Kennzeichen des Fahrzeugs, das den Stellplatz belegt
+        // Wenn der Stellplatz frei ist, ist kein Kenn´zeichen abgelegt
+        public string Kennzeichen { get; set; }
 
-        public int get_StellplatzNummer()
+        // Nummer des Stellplatzes im Parkhaus
+        public int Nummer { get; }
+
+        // Konstruktor
+        public Stellplatz(int pNummer)
         {
-            return StellplatzNummer;
+            Kennzeichen = "";
+            Typ = "PKW";
+            Nummer = pNummer;
         }
-
-        public string get_Type()
+        // Gibt true zurück, wenn der Stellplatz frei ist
+        public bool FreierStellplatz()
         {
-            return Type;
-        }
-
-        public string get_Kennzeichen()
-        {
-            return Kennzeichen;
-        }
-
-        public void set_StellplatzNummer()
-        {
-
-        }
-
-        public void set_Type()
-        {
-
-        }
-
-        public void set_Kennzeichen()
-        {
-
+            return (Kennzeichen.Length == 0);
         }
     }
-
 }

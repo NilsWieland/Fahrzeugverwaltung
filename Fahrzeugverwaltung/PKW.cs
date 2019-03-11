@@ -6,42 +6,35 @@ using System.Threading.Tasks;
 
 namespace Fahrzeugverwaltung
 {
-    public class PKW:Fahrzeug
+    public class PKW : Fahrzeug
     {
-        private int HubraumPKW;
-        private int Leistung;
-        private int Schadstoffklasse;
-
-
-        public int get_HubraumPKW()
+        // Typ ist immer Motorrad
+        public override string Typ
         {
-            return HubraumPKW;
+            get
+            {
+                return "PKW";
+            }
         }
 
-        public int get_Leistung()
+        // Hubraum in Kubikcentimeter
+        public int Hubraum { get; }
+
+        // Leistung in kW
+        public int Leistung { get; }
+
+        // Schadstoffklasse (0 - 6)
+        public int Schadstoffklasse { get; }
+
+        // Konstruktor
+        // Ruft Konstruktor der Basisklasse auf
+        public PKW(string pHersteller, string pModell, int pJahrErstzulassung, float pAnschaffungspreis, string pKennzeichen, int pHubraum, int pLeistung, int pSchadstoffklasse) :
+               base(pHersteller, pModell, pJahrErstzulassung, pAnschaffungspreis, pKennzeichen)
         {
-            return Leistung;
+            Hubraum = pHubraum;
+            Leistung = pLeistung;
+            Schadstoffklasse = pSchadstoffklasse;
         }
-
-        public int get_Schadstoffklasse()
-        {
-            return Schadstoffklasse;
-        }
-
-        public void set_HubraumPKW()
-        {
-
-        }
-
-        public void set_Lesitung()
-        {
-
-        }
-
-        public void set_Schadstoffklasse()
-        {
-
-        }
-
     }
+
 }

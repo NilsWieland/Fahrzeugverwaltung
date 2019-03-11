@@ -6,32 +6,30 @@ using System.Threading.Tasks;
 
 namespace Fahrzeugverwaltung
 {
-    public class LKW:Fahrzeug
+    public class LKW : Fahrzeug
     {
-        private int AnzahlAchsen;
-        private float Zuladung;
-
-
-        public int get_AnzahlAchsen()
+        // Typ ist immer LKW
+        public override string Typ
         {
-            return AnzahlAchsen
-
+            get
+            {
+                return "LKW";
+            }
         }
 
-        public float get_Zuladung()
+        // Anzahl der Achsen
+        public int AnzahlAchsen { get; }
+
+        // Zuladung in Tonnen
+        public float Zuladung { get; }
+
+        // Konstruktor
+        // Ruft Konstruktor der Basisklasse auf
+        public LKW(string pHersteller, string pModell, int pJahrErstzulassung, float pAnschaffungspreis, string pKennzeichen, int pAnzahlAchsen, float pZuladung) :
+               base(pHersteller, pModell, pJahrErstzulassung, pAnschaffungspreis, pKennzeichen)
         {
-            return Zuladung;
+            AnzahlAchsen = pAnzahlAchsen;
+            Zuladung = pZuladung;
         }
-
-        public void set_AnzahlAchsen()
-        {
-
-        }
-
-        public void set_Zuladung()
-        {
-
-        }
-
     }
 }
