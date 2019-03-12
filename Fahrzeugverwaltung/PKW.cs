@@ -8,7 +8,7 @@ namespace Fahrzeugverwaltung
 {
     public class PKW : Fahrzeug
     {
-        // Typ ist immer Motorrad
+        // Typ ist immer PKW
         public override string Typ
         {
             get
