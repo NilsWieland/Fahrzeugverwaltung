@@ -23,47 +23,56 @@ namespace Fahrzeugverwaltung
         // Konstruktor
         public Parkhaus(int pAnzahlStellplaetze, string pPLZ, string pOrt, string pStrasse)
         {
+            // Addresse des Parkhauses abspeichern
             Ort = pOrt;
             PLZ = pPLZ;
             Strasse = pStrasse;
 
+            // Anzahl der Stellplätze des Parkhauses abspeichern
             AnzahlStellplaetze = pAnzahlStellplaetze;
             
-            // Array mit Stellplaetzen erzeugen
+            // Array für Stellplatzobjekte erzeugen
             StellPlaetze = new Stellplatz[AnzahlStellplaetze];
-            for (int idx = 0; idx < AnzahlStellplaetze; idx++)
+            
+            // Erzeuge Stellplatzobjekte und speichere sie im Array
+            for (int index = 0; index < AnzahlStellplaetze; index++)
             {
-                StellPlaetze[idx] = new Stellplatz(idx + 1);
+                StellPlaetze[index] = new Stellplatz(index + 1);
             }
         }
 
         // Gibt die Anzahl der Stellpätze eines Typs (PKW, LKW, Motorrad) zurück
         public int AnzahlStellplaetze_Typ(string typ)
         {
-            int count = 0;
-            for (int idx = 0; idx < AnzahlStellplaetze; idx++)
+            int StellplatzZaehler = 0;
+
+            // Schleife über alle Stellplätze
+            for (int index = 0; index < AnzahlStellplaetze; index++)
             {
-                if (StellPlaetze[idx].Typ == typ)
+                // Erhöhe den Zähler wenn der Stellplatz vom übergebenen Typ ist
+                if (StellPlaetze[index].Typ == typ)
                 {
-                    count++;
+                    StellplatzZaehler++;
                 }
             }
-            return count;
+            return StellplatzZaehler;
         }
 
         // Gibt die Anzahl der belegten PKW, LKW oder Motorrad Stellpätze zurück
         public int AnzahlStellplaetze_Belegt_Typ(string typ)
         {
-            int count = 0;
-            for (int idx = 0; idx < AnzahlStellplaetze; idx++)
+            int StellplatzZaehler = 0;
+            
+            // Schleife über alle Stellplätze
+            for (int index = 0; index < AnzahlStellplaetze; index++)
             {
-                if ((StellPlaetze[idx].Typ == typ) && (StellPlaetze[idx].FreierStellplatz() == false))
+                // Erhöhe den Zähler wenn der Stellplatz vom übergebenen Typ ist und wenn der Stellplatz belegt
+                if ((StellPlaetze[index].Typ == typ) && (StellPlaetze[index].FreierStellplatz() == false))
                 {
-                    count++;
+                    StellplatzZaehler++;
                 }
             }
-            return count;
+            return StellplatzZaehler;
         }
     }
-
 }

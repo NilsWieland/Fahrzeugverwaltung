@@ -25,7 +25,7 @@ namespace Fahrzeugverwaltung
             Parkhaeuser = new List<Parkhaus>();
         }
 
-        // Gibt Anzahl der Parkhäuser zurück
+        // Gibt Anzahl der Parkhäuser in der Liste zurück
         public int AnzahlParkhaeuser
         {
             get
@@ -34,7 +34,7 @@ namespace Fahrzeugverwaltung
             }
         }
 
-        // Gibt Anzahl der Fahrzeuge zurück
+        // Gibt Anzahl der Fahrzeuge in der Liste zurück
         public int AnzahlFahrzeuge
         {
             get
@@ -43,13 +43,13 @@ namespace Fahrzeugverwaltung
             }
         }
 
-        // Fügt ein Parkhaus hinzu
+        // Fügt ein Parkhaus zur Liste hinzu
         public void ParkhausHinzufuegen(Parkhaus value)
         {
             Parkhaeuser.Add(value);
         }
 
-        // Fügt ein Fahrzeug hinzu
+        // Fügt ein Fahrzeug zur Liste hinzu
         public void FahrzeugHinzufuegen(Fahrzeug value)
         {
             Fahrzeuge.Add(value);
@@ -58,7 +58,8 @@ namespace Fahrzeugverwaltung
         // Löscht das Parkhaus mit der Nummer id
         public void ParkhausLoeschen(int id)
         {
-            if ((id >= 0) && (id <= AnzahlParkhaeuser))
+            // Parkhaus nur dann löschen wenn der Index kleiner als die Anzahl der Parkhäuser ist
+            if ((id >= 0) && (id < AnzahlParkhaeuser))
             {
                 Parkhaeuser.RemoveAt(id);
             }
@@ -67,7 +68,8 @@ namespace Fahrzeugverwaltung
         // Löscht das Fahrzeug mit der Nummer id
         public void FahrzeugLoeschen(int id)
         {
-            if ((id >= 0) && (id <= AnzahlFahrzeuge))
+            // Fahrzeug nur dann löschen wenn der Index kleiner als die Anzahl der Fahrzeuge ist
+            if ((id >= 0) && (id < AnzahlFahrzeuge))
             {
                 Fahrzeuge.RemoveAt(id);
             }
@@ -76,32 +78,110 @@ namespace Fahrzeugverwaltung
         // Gibt das Parkhaus mit der Nummer id zurück
         public Parkhaus ParkhausGet(int id)
         {
-            return Parkhaeuser[id];
+            // Parkhaus nur dann zurückgeben, wenn der Index kleiner als die Anzahl der Parkhäuser ist
+            if ((id >= 0) && (id < AnzahlParkhaeuser))
+            {
+                return Parkhaeuser[id];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // Gibt das Fahrzeug mit der Nummer id zurück
         public Fahrzeug FahrzeugGet(int id)
         {
-            return Fahrzeuge[id];
+            // Fahrzeug nur dann zurückgeben, wenn der Index kleiner als die Anzahl der Fahrzeuge ist
+            if ((id >= 0) && (id < AnzahlFahrzeuge))
+            {
+                return Fahrzeuge[id];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // Lädt die Daten aller Parkhäuser aus einer Datei
-        public void LadeParkhaueser()
+        private void LadeParkhaueser()
         {
+            // Laden der Parkhäuser aus einer Datei ist noch nicht implementiert.
+            // Parkhaus wird einfach erzeugt und zur Liste hinzugefügt.
             Parkhaeuser.Add(new Parkhaus(40, "51105", "Köln", "Westerwaldstr. 99"));
         }
 
         // Lädt die Daten aller Fahrzeuge aus einer Datei
-        public void LadeFahrzeuge()
+        private void LadeFahrzeuge()
         {
-            Fahrzeuge.Add(new PKW("VW", "Käfer", 1965, 9999, "K-GS-01", 1000, 30, 1));
-            Fahrzeuge.Add(new PKW("Opel", "Kadett", 1964, 12000, "K-GS-02", 1600, 60, 2));
-            Fahrzeuge.Add(new LKW("Mercedes", "LG 315", 1960, 23000, "K-GS-04", 2, 5.5f));
-            Fahrzeuge.Add(new Motorrad("BMW", "R1200R", 1999, 6000, "K-GS-03", 1170));
+            string Textzeile;
+
+            // Lese Textdatei und erzeuge Fahrzeugobjekte 
+            // Die Daten jedes Fahrzeugs sind in einer Zeile gespeichert
+            // Die einzelnen Daten eines Fahrzeuges sind durch das Zeichen ; getrennt
+            // Der Fahrzeugtyp ist das erste Datum in der Zeile
+            // z.B "PKW; VW; Käfer; 1965; 9999; K-GS-01; 1000; 30; 1"
+            System.IO.StreamReader file = new System.IO.StreamReader(@"Fahrzeuge.txt");
+
+            // Schleife bis alle Textzeilen gelesen wurden
+            while ((Textzeile = file.ReadLine()) != null)
+            {
+                // Zerlege Textzeile und kopiere alle Datenelemente eines Fahrzeugs in ein String-Array
+                string[] DatenArray = Textzeile.Split(';');
+
+                // Erstes Datenelement gibt an, dass ein PKW erzeugt werden soll
+                if (DatenArray[0] == "PKW")
+                {
+                    // Prüfe Datenzeile und erzeuge PKW, wenn Datenzeile OK ist
+                    // Die Funktion PKW.ErzeugeFahrzeug gibt ein PKW Objekt zurück, 
+                    // wenn die Datenzeile Ok ist, sonst wird null zurückgegeben.
+                    Fahrzeug fz = PKW.ErzeugeFahrzeug(Textzeile);
+                    if (fz != null)
+                    {
+                        // Datenzeile war OK und Fahrzeug wurde erzeugt
+                        // Füge Fahrzeug zur Fahrzeugliste hinzu
+                        Fahrzeuge.Add(fz);
+                    }
+                }
+                // Erstes Datenelement gibt an, dass ein LKW erzeugt werden soll
+                else if (DatenArray[0] == "LKW")
+                {
+                    // Prüfe Datenzeile und erzeuge LKW, wenn Datenzeile OK ist.
+                    // Die Funktion LKW.ErzeugeFahrzeug gibt ein LKW Objekt zurück, 
+                    // wenn die Datenzeile Ok ist, sonst wird null zurückgegeben.
+                    Fahrzeug fz = LKW.ErzeugeFahrzeug(Textzeile);
+                    if (fz != null)
+                    {
+                        // Datenzeile war OK und Fahrzeug wurde erzeugt
+                        // Füge Fahrzeug zur Fahrzeugliste hinzu
+                        Fahrzeuge.Add(fz);
+                    }
+                }
+                // Erstes Datenelement gibt an, dass ein Motorrad erzeugt werden soll
+                else if (DatenArray[0] == "Motorrad")
+                {
+                    // Prüfe Datenzeile und erzeuge Motorrad, wenn Datenzeile OK ist.
+                    // Die Funktion Motorad.ErzeugeFahrzeug gibt ein Motorad Objekt zurück, 
+                    // wenn die Datenzeile Ok ist, sonst wird null zurückgegeben.
+                    Fahrzeug fz = Motorrad.ErzeugeFahrzeug(Textzeile);
+                    if (fz != null)
+                    {
+                        // Datenzeile war OK und Fahrzeug wurde erzeugt
+                        // Füge Fahrzeug zur Fahrzeugliste hinzu
+                        Fahrzeuge.Add(fz);
+                    }
+                }
+                else
+                {
+                    // Unbekannter Fahrzeugtyp. Die Textzeile wird ignoriert
+                }
+            }
+
+            file.Close();
         }
 
         // Lädt alle Daten (Fahrzeuge und Parkhäuser)
-        public void Load()
+        public void Laden()
         {
             LadeParkhaueser();
             LadeFahrzeuge();

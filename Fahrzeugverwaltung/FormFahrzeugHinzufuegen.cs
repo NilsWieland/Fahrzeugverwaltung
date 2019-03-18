@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Fahrzeugverwaltung
 {
-    public partial class Fahrzeughinzufügen : Form
+    public partial class FormFahrzeugHinzufuegen : Form
     {
-        public Fahrzeughinzufügen()
+        public FormFahrzeugHinzufuegen()
         {
             InitializeComponent();
         }
