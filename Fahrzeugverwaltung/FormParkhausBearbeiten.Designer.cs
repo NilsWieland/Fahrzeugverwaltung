@@ -38,13 +38,13 @@
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(209, 36);
+            this.label1.Size = new System.Drawing.Size(169, 29);
             this.label1.TabIndex = 0;
             this.label1.Text = "In Bearbeitung";
             // 
             // FormParkhausBearbeiten
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 36F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(479, 470);
             this.Controls.Add(this.label1);

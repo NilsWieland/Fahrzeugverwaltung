@@ -56,20 +56,19 @@
             this.tableLayoutPanel1.Controls.Add(this.labelErrorText, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(596, 210);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(447, 171);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.92357F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.07643F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.61571F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.05095F));
             this.tableLayoutPanel3.Controls.Add(this.textBoxPLZ, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.textBoxAnzahlParkplaetze, 1, 3);
             this.tableLayoutPanel3.Controls.Add(this.textBoxOrt, 1, 1);
@@ -79,63 +78,55 @@
             this.tableLayoutPanel3.Controls.Add(this.labelOrt, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.labelPLZ, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 4;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(588, 121);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(441, 98);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // textBoxPLZ
             // 
             this.textBoxPLZ.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBoxPLZ.Location = new System.Drawing.Point(97, 4);
-            this.textBoxPLZ.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxPLZ.Location = new System.Drawing.Point(73, 3);
             this.textBoxPLZ.Name = "textBoxPLZ";
-            this.textBoxPLZ.Size = new System.Drawing.Size(95, 22);
+            this.textBoxPLZ.Size = new System.Drawing.Size(72, 20);
             this.textBoxPLZ.TabIndex = 1;
             // 
             // textBoxAnzahlParkplaetze
             // 
             this.textBoxAnzahlParkplaetze.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBoxAnzahlParkplaetze.Location = new System.Drawing.Point(97, 94);
-            this.textBoxAnzahlParkplaetze.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxAnzahlParkplaetze.Location = new System.Drawing.Point(73, 75);
             this.textBoxAnzahlParkplaetze.Name = "textBoxAnzahlParkplaetze";
-            this.textBoxAnzahlParkplaetze.Size = new System.Drawing.Size(95, 22);
+            this.textBoxAnzahlParkplaetze.Size = new System.Drawing.Size(72, 20);
             this.textBoxAnzahlParkplaetze.TabIndex = 4;
             // 
             // textBoxOrt
             // 
             this.textBoxOrt.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBoxOrt.Location = new System.Drawing.Point(97, 34);
-            this.textBoxOrt.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxOrt.Location = new System.Drawing.Point(73, 27);
             this.textBoxOrt.Name = "textBoxOrt";
-            this.textBoxOrt.Size = new System.Drawing.Size(428, 22);
+            this.textBoxOrt.Size = new System.Drawing.Size(322, 20);
             this.textBoxOrt.TabIndex = 2;
             // 
             // textBoxStrasse
             // 
             this.textBoxStrasse.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBoxStrasse.Location = new System.Drawing.Point(97, 64);
-            this.textBoxStrasse.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxStrasse.Location = new System.Drawing.Point(73, 51);
             this.textBoxStrasse.Name = "textBoxStrasse";
-            this.textBoxStrasse.Size = new System.Drawing.Size(428, 22);
+            this.textBoxStrasse.Size = new System.Drawing.Size(322, 20);
             this.textBoxStrasse.TabIndex = 3;
             // 
             // labelParkplaetze
             // 
             this.labelParkplaetze.AutoSize = true;
             this.labelParkplaetze.Dock = System.Windows.Forms.DockStyle.Left;
-            this.labelParkplaetze.Location = new System.Drawing.Point(4, 90);
-            this.labelParkplaetze.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelParkplaetze.Location = new System.Drawing.Point(3, 72);
             this.labelParkplaetze.Name = "labelParkplaetze";
-            this.labelParkplaetze.Size = new System.Drawing.Size(75, 31);
+            this.labelParkplaetze.Size = new System.Drawing.Size(57, 26);
             this.labelParkplaetze.TabIndex = 4;
             this.labelParkplaetze.Text = "Parkplätze";
             this.labelParkplaetze.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -144,10 +135,9 @@
             // 
             this.labelStrasse.AutoSize = true;
             this.labelStrasse.Dock = System.Windows.Forms.DockStyle.Left;
-            this.labelStrasse.Location = new System.Drawing.Point(4, 60);
-            this.labelStrasse.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelStrasse.Location = new System.Drawing.Point(3, 48);
             this.labelStrasse.Name = "labelStrasse";
-            this.labelStrasse.Size = new System.Drawing.Size(56, 30);
+            this.labelStrasse.Size = new System.Drawing.Size(42, 24);
             this.labelStrasse.TabIndex = 3;
             this.labelStrasse.Text = "Strasse";
             this.labelStrasse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -156,10 +146,9 @@
             // 
             this.labelOrt.AutoSize = true;
             this.labelOrt.Dock = System.Windows.Forms.DockStyle.Left;
-            this.labelOrt.Location = new System.Drawing.Point(4, 30);
-            this.labelOrt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelOrt.Location = new System.Drawing.Point(3, 24);
             this.labelOrt.Name = "labelOrt";
-            this.labelOrt.Size = new System.Drawing.Size(28, 30);
+            this.labelOrt.Size = new System.Drawing.Size(21, 24);
             this.labelOrt.TabIndex = 2;
             this.labelOrt.Text = "Ort";
             this.labelOrt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -168,10 +157,9 @@
             // 
             this.labelPLZ.AutoSize = true;
             this.labelPLZ.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelPLZ.Location = new System.Drawing.Point(4, 0);
-            this.labelPLZ.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelPLZ.Location = new System.Drawing.Point(3, 0);
             this.labelPLZ.Name = "labelPLZ";
-            this.labelPLZ.Size = new System.Drawing.Size(85, 30);
+            this.labelPLZ.Size = new System.Drawing.Size(64, 24);
             this.labelPLZ.TabIndex = 1;
             this.labelPLZ.Text = "PLZ";
             this.labelPLZ.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -185,21 +173,20 @@
             this.tableLayoutPanel2.Controls.Add(this.buttonUebernehmen, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.buttonAbbrechen, 2, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 158);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 127);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(588, 48);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(441, 41);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // buttonUebernehmen
             // 
             this.buttonUebernehmen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonUebernehmen.Location = new System.Drawing.Point(3, 2);
-            this.buttonUebernehmen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonUebernehmen.Location = new System.Drawing.Point(2, 2);
+            this.buttonUebernehmen.Margin = new System.Windows.Forms.Padding(2);
             this.buttonUebernehmen.Name = "buttonUebernehmen";
-            this.buttonUebernehmen.Size = new System.Drawing.Size(253, 44);
+            this.buttonUebernehmen.Size = new System.Drawing.Size(190, 37);
             this.buttonUebernehmen.TabIndex = 5;
             this.buttonUebernehmen.Text = "Übernehmen";
             this.buttonUebernehmen.UseVisualStyleBackColor = true;
@@ -208,10 +195,10 @@
             // 
             this.buttonAbbrechen.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonAbbrechen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAbbrechen.Location = new System.Drawing.Point(339, 2);
-            this.buttonAbbrechen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonAbbrechen.Location = new System.Drawing.Point(253, 2);
+            this.buttonAbbrechen.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAbbrechen.Name = "buttonAbbrechen";
-            this.buttonAbbrechen.Size = new System.Drawing.Size(246, 44);
+            this.buttonAbbrechen.Size = new System.Drawing.Size(186, 37);
             this.buttonAbbrechen.TabIndex = 6;
             this.buttonAbbrechen.Text = "Abbrechen";
             this.buttonAbbrechen.UseVisualStyleBackColor = true;
@@ -220,19 +207,19 @@
             // 
             this.labelErrorText.AutoSize = true;
             this.labelErrorText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelErrorText.Location = new System.Drawing.Point(4, 129);
-            this.labelErrorText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelErrorText.Location = new System.Drawing.Point(3, 104);
             this.labelErrorText.Name = "labelErrorText";
-            this.labelErrorText.Size = new System.Drawing.Size(588, 25);
+            this.labelErrorText.Size = new System.Drawing.Size(441, 20);
             this.labelErrorText.TabIndex = 3;
             // 
-            // ParkhausHinzufuegen
+            // FormParkhausHinzufuegen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(596, 210);
+            this.ClientSize = new System.Drawing.Size(447, 171);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "ParkhausHinzufuegen";
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Name = "FormParkhausHinzufuegen";
             this.Text = "Parkhaus hinzufügen";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

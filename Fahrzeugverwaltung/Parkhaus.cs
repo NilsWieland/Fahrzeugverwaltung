@@ -9,6 +9,9 @@ namespace Fahrzeugverwaltung
     // Klasse Parkhaus
     public class Parkhaus
     {
+        // Parkhausnummer
+        public int ParkhausNummer { get; }
+
         // Adresse Parkhaus
         public string Ort { get; }
         public string PLZ { get; }
@@ -21,8 +24,10 @@ namespace Fahrzeugverwaltung
         public Stellplatz[] StellPlaetze { get; }
 
         // Konstruktor
-        public Parkhaus(int pAnzahlStellplaetze, string pPLZ, string pOrt, string pStrasse)
+        public Parkhaus(int pParkhausNummer, int pAnzahlStellplaetze, string pPLZ, string pOrt, string pStrasse)
         {
+            ParkhausNummer = pParkhausNummer;
+
             // Addresse des Parkhauses abspeichern
             Ort = pOrt;
             PLZ = pPLZ;

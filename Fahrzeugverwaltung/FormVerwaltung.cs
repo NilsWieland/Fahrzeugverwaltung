@@ -24,7 +24,7 @@ namespace Fahrzeugverwaltung
         }
 
         // Lädt alle Parkhäuser und Fahrzeuge und stellt sie im Hauptfenster dar.
-        // Die Funktion wird aus InitializeComponent() heraus aufgerufen
+        // Die Funktion wird beim Start von FormVerwaltung aufgerufen
         private void FormVerwaltung_Load(object sender, EventArgs e)
         {
             // Erzeuge neues Verwaltungsobjekt
@@ -42,6 +42,15 @@ namespace Fahrzeugverwaltung
             ViewFahrzeuge_Update();
         }
 
+        // Speichert alle Parkhäuser und Fahrzeuge
+        // Die Funktion wird beim Schliessen des Fensters FormVerwaltung aufgerufen
+        private void FormVerwaltung_Closing(object sender, FormClosingEventArgs e)
+        {
+            // Speicher alle Parkhäuser und Fahrzeuge
+            Verwaltung.Speichern();
+        }
+
+
         // Aktualisiert die Darstellung der Parkhäuser im Hauptfenster
         private void ViewParkhaeuser_Update()
         {
@@ -57,21 +66,24 @@ namespace Fahrzeugverwaltung
                 // Alle dargestellten Daten eines Parkhauses werden in ein Array kopiert
                 // Das Array entspricht einer Zeile im Listview
                 // Jedes Array-Element entspricht dabei einer Spalte im Listview
-                string[] ListviewZeile = new string[6];
+                string[] ListviewZeile = new string[7];
 
-                // Spalten 1 - 3: Addresse
-                ListviewZeile[0] = ph.PLZ;
-                ListviewZeile[1] = ph.Ort;
-                ListviewZeile[2] = ph.Strasse;
+                // Spalten 1: Parkhausnummer
+                ListviewZeile[0] = ph.ParkhausNummer.ToString();
                 
-                // Spalte 4: Anzahl der PKW Stellplätze (Belegt/Frei)
-                ListviewZeile[3] = ph.AnzahlStellplaetze_Belegt_Typ("PKW").ToString() + " von " + ph.AnzahlStellplaetze_Typ("PKW").ToString();
+                // Spalten 2 - 4: Addresse
+                ListviewZeile[1] = ph.PLZ;
+                ListviewZeile[2] = ph.Ort;
+                ListviewZeile[3] = ph.Strasse;
                 
-                // Spalte 5: Anzahl der LKW Stellplätze (Belegt/Frei)
-                ListviewZeile[4] = ph.AnzahlStellplaetze_Belegt_Typ("LKW").ToString() + " von " + ph.AnzahlStellplaetze_Typ("LKW").ToString();
+                // Spalte 5: Anzahl der PKW Stellplätze (Belegt/Frei)
+                ListviewZeile[4] = ph.AnzahlStellplaetze_Belegt_Typ("PKW").ToString() + " von " + ph.AnzahlStellplaetze_Typ("PKW").ToString();
+                
+                // Spalte 6: Anzahl der LKW Stellplätze (Belegt/Frei)
+                ListviewZeile[5] = ph.AnzahlStellplaetze_Belegt_Typ("LKW").ToString() + " von " + ph.AnzahlStellplaetze_Typ("LKW").ToString();
 
-                // Spalte 6: Anzahl der Motorrad Stellplätze (Belegt/Frei)
-                ListviewZeile[5] = ph.AnzahlStellplaetze_Belegt_Typ("Motorad").ToString() + " von " + ph.AnzahlStellplaetze_Typ("Motorad").ToString();
+                // Spalte 7: Anzahl der Motorrad Stellplätze (Belegt/Frei)
+                ListviewZeile[6] = ph.AnzahlStellplaetze_Belegt_Typ("Motorad").ToString() + " von " + ph.AnzahlStellplaetze_Typ("Motorad").ToString();
 
                 // Füge neue Zeile  mit Parkhausdaten zum Listview hinzu
                 listViewParkhaeuser.Items.Add(new ListViewItem(ListviewZeile));
@@ -166,7 +178,7 @@ namespace Fahrzeugverwaltung
             // Lösche alle Einträge im Listview
             listViewFahrzeuge.Items.Clear();
 
-            // Füge die Daten aller Parkhäuser zum Listview hinzu 
+            // Füge die Daten aller Fahrzeuge zum Listview hinzu 
             for (int ii = 0; ii < Verwaltung.AnzahlFahrzeuge; ii++)
             {
                 // Hole Fahrzeugobjekt aus der fahrzeugliste
@@ -179,22 +191,48 @@ namespace Fahrzeugverwaltung
                 // Alle dargestellten Daten eines Fahrzeuges werden in ein Array kopiert
                 // Das Array entspricht einer Zeile im Listview
                 // Jedes Array-Element entspricht dabei einer Spalte im Listview
-                string[] ListviewZeile = new string[7];
+                string[] ListviewZeile = new string[9];
 
                 // Spalte 1: Typ
                 ListviewZeile[0] = fz.Typ;
+
                 // Spalte 2: Hersteller
                 ListviewZeile[1] = fz.Hersteller;
+
                 // Spalte 3: Modell
                 ListviewZeile[2] = fz.Modell;
+
                 // Spalte 4: Kennzeichen
                 ListviewZeile[3] = fz.Kennzeichen;
-                // Spalte 5: Jahr der Erstzulassung
-                ListviewZeile[4] = fz.Erstzulassung.ToString();
-                // Anschaffungspreis in Euro mit 2 Nachkommastellen (C2)
-                ListviewZeile[5] = String.Format("{0:C2}", fz.Anschaffungspreis);
-                // Steuer in Euro mit 2 Nachkommastellen (C2)
-                ListviewZeile[6] = String.Format("{0:C2}",  Steuer);
+
+                // Spalte 5: Parkhausnummer
+                if (fz.ParkhausNummer > 0)
+                { 
+                    ListviewZeile[4] = fz.ParkhausNummer.ToString();
+                }
+                else
+                {
+                    ListviewZeile[4] = "-";
+                }
+
+                // Spalte 6: Stellplatznummer
+                if (fz.StellplatzNummer > 0)
+                {
+                    ListviewZeile[5] = fz.StellplatzNummer.ToString();
+                }
+                else
+                {
+                    ListviewZeile[5] = "-";
+                }
+
+                // Spalte 7: Jahr der Erstzulassung
+                ListviewZeile[6] = fz.Erstzulassung.ToString();
+
+                // Spalte 8:  Anschaffungspreis in Euro mit 2 Nachkommastellen (C2)
+                ListviewZeile[7] = String.Format("{0:C2}", fz.Anschaffungspreis);
+
+                // Spalte 9:  Steuer in Euro mit 2 Nachkommastellen (C2)
+                ListviewZeile[8] = String.Format("{0:C2}",  Steuer);
 
                 // Füge neue Zeile  mit Fahrzeugdaten zum Listview hinzu
                 listViewFahrzeuge.Items.Add(new ListViewItem(ListviewZeile));
@@ -241,12 +279,27 @@ namespace Fahrzeugverwaltung
 
         private void buttonFahrzeugHinzufuegen_Click(object sender, EventArgs e)
         {
-            // Dialog ist noch nicht implementiert    
-
+            // Erzeuge FahrzeugHinzufuegen Dialog Objekt
             FormFahrzeugHinzufuegen form = new FormFahrzeugHinzufuegen();
 
+            // Zeige Dialog
+            // Die Funktion wird erst beendet, nachdem Dialog-Fenster geschlossen wurde
             form.ShowDialog();
+
+            // Prüfen ob Dialog mit OK beendet wurde
+            if (form.DialogResult == DialogResult.OK)
+            {
+                // Neues Fahrzeug zur Fahrzeugliste hinzufuegen, wenn Dialog mit OK beendet wurde
+                // Das Fahrzeug wurde vom Dialog erzeugt und kann von Außen gelesen werden (form.Fahrzeug)
+                Verwaltung.FahrzeugHinzufuegen(form.Fahrzeug);
+
+                // Die Darstellung der Fahrzeugdaten wird aktualisiert
+                ViewFahrzeuge_Update();
+            }
+
+            // Der Fokus wird wieder auf den Fahrzeug Listview gesetzt
             listViewFahrzeuge.Select();
+
         }
 
         // Funktion wird aufgerufen wenn der "Löschen" Button gedrückt wurde

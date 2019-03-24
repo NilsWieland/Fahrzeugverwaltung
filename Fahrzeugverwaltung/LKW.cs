@@ -12,7 +12,7 @@ namespace Fahrzeugverwaltung
         public override string Typ
         {
             get
-            {
+            { 
                 return "LKW";
             }
         }
@@ -34,12 +34,44 @@ namespace Fahrzeugverwaltung
 
         // Konstruktor
         // Ruft Konstruktor der Basisklasse auf
-        public LKW(string pHersteller, string pModell, int pJahrErstzulassung, float pAnschaffungspreis, string pKennzeichen, int pAnzahlAchsen, float pZuladung) :
-               base(pHersteller, pModell, pJahrErstzulassung, pAnschaffungspreis, pKennzeichen)
+        public LKW(
+            string pHersteller, 
+            string pModell, 
+            int pJahrErstzulassung, 
+            float pAnschaffungspreis, 
+            string pKennzeichen,
+            int pParkhausNummer,
+            int pStellplatzNummer,
+            int pAnzahlAchsen, 
+            float pZuladung) :
+               base(pHersteller, pModell, pJahrErstzulassung, pAnschaffungspreis, pKennzeichen, pParkhausNummer, pStellplatzNummer)
         {
             AnzahlAchsen = pAnzahlAchsen;
             Zuladung = pZuladung;
         }
+
+        // Gibt einen String zurück, der alle Daten des LKW Objektes in einer Textzeile enthält. 
+        // Die einzelnen Datenelemente sind durch das Zeichen ";" coneinander getrennt
+        public override String ToString()
+        {
+            return
+                base.ToString() + "; " +             // Die Daten der Basisklasse in einen String ausgeben
+                AnzahlAchsen.ToString() + "; " +     // Die LKW spezifischen Daten werden an die Daten der Basisklasse angehängt
+                Zuladung.ToString();
+        }
+
+        // Prüfe und kopiere AnzahlAchsen (2 - 32)
+        public static bool TextToAnzahlAchsen(string Text, out int AnzahlAchsen)
+        {
+            return PruefeInteger(Text, 2, 32, out AnzahlAchsen);
+        }
+
+        // Prüfe und kopiere Zuladung (1 t - 50 t)
+        public static bool TextToZuladung(string Text, out float Zuladung)
+        {
+            return PruefeFloat(Text, 1, 100, out Zuladung);
+        }
+
         // Erzeugt ein LKW Objekt aus einer Datenzeile. 
         // Die Datenzeile wird geprüft. 
         // Sind die Daten OK wird ein LKW Objekt erzeugt und zurückgegeben.
@@ -55,39 +87,50 @@ namespace Fahrzeugverwaltung
             int Erstzulassung;
             float Anschaffungspreis;
             string Kennzeichen;
+            int ParkhausNummer;
+            int StellplatzNummer;
+
             int AnzahlAchsen = 0;
             float Zuladung = 0;
 
-            string[] DataArray = Datenzeile.Split(';');
-
             // Prüfe, die für alle Fahrzeuge gemeinsamen Daten, durch Funktion der Elternklasse 
-            bool DatenOk = Fahrzeug.PruefeDaten(Datenzeile, out Hersteller, out Modell, out Erstzulassung, out Anschaffungspreis, out Kennzeichen);
+            bool DatenOk = Fahrzeug.TextToFahrzeugDaten(
+                Datenzeile,
+                out Hersteller,
+                out Modell,
+                out Erstzulassung,
+                out Anschaffungspreis,
+                out Kennzeichen,
+                out ParkhausNummer,
+                out StellplatzNummer);
 
             // Prüfen der LKW Daten, wenn gemeinsame Daten OK sind
             if (DatenOk)
             {
+                string[] DataArray = Datenzeile.Split(';');
+
                 // Erstes Datenelement muss LKW sein
                 if (DataArray[0] != "LKW")
                 {
                     DatenOk = false;
                 }
-            }
 
-             // Wandle String in int-Wert für Schadstoffklasse (0 - 2)
-            if (DatenOk)
-            {
-                DatenOk = PruefeInteger(DataArray[6], 2, 16, out AnzahlAchsen);
-            }
+                // Prüfe und kopiere Achsenanzahl
+                if (DatenOk)
+                {
+                    DatenOk = TextToAnzahlAchsen(DataArray[8], out AnzahlAchsen);
+                }
 
-            // Wandle String in int-Wert für ZUöadung (0 - 50)
-            if (DatenOk)
-            {
-                DatenOk = PruefeFloat(DataArray[7], 1, 50, out Zuladung);
+                // Prüfe und kopiere Zuladung
+                if (DatenOk)
+                {
+                    DatenOk = TextToZuladung(DataArray[8], out Zuladung);
+                }
             }
 
             // Erzeuge PKW Objekt, wenn die Daten OK sind. Sonst wird null zurückgegeben.
             if (DatenOk)
-                return new LKW(Hersteller, Modell, Erstzulassung, Anschaffungspreis, Kennzeichen, AnzahlAchsen, Zuladung);
+                return new LKW(Hersteller, Modell, Erstzulassung, Anschaffungspreis, Kennzeichen, ParkhausNummer, StellplatzNummer, AnzahlAchsen, Zuladung);
             else
                 return null;
         }
