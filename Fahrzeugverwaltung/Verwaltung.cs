@@ -108,7 +108,31 @@ namespace Fahrzeugverwaltung
         {
             // Laden der Parkhäuser aus einer Datei ist noch nicht implementiert.
             // Parkhaus wird einfach erzeugt und zur Liste hinzugefügt.
-            Parkhaeuser.Add(new Parkhaus(1, 40, "51105", "Köln", "Westerwaldstr. 99"));
+
+            Parkhaeuser.Add(new Parkhaus(1, 320, "51105", "Köln", "Westerwaldstr. 99"));
+
+            // Hach dem Erzeugen des Parkhaus sind alle Stellplätze als PKW-Stellplätze voreingestellt
+            // Erzeuge 5 Motorradstellplätze
+            Parkhaus ph = Parkhaeuser[0];
+            ph.StellPlaetze[200].Typ = "Motorrad";
+            ph.StellPlaetze[201].Typ = "Motorrad";
+            ph.StellPlaetze[202].Typ = "Motorrad";
+            ph.StellPlaetze[203].Typ = "Motorrad";
+            ph.StellPlaetze[204].Typ = "Motorrad";
+
+            // Erzeuge 5 LKW-Stellplätze
+            ph.StellPlaetze[300].Typ = "LKW";
+            ph.StellPlaetze[301].Typ = "LKW";
+            ph.StellPlaetze[302].Typ = "LKW";
+            ph.StellPlaetze[303].Typ = "LKW";
+            ph.StellPlaetze[304].Typ = "LKW";
+
+            // Weise Fahrzeuge den Stellplätzen zu
+            ph.StellPlaetze[100].Kennzeichen = "K-GS-01";
+            ph.StellPlaetze[101].Kennzeichen = "K-GS-02";
+            ph.StellPlaetze[200].Kennzeichen = "K-GS-03";
+            ph.StellPlaetze[201].Kennzeichen = "K-GS-05";
+            ph.StellPlaetze[300].Kennzeichen = "K-GS-04";
         }
 
         // Speichert die Daten aller Parkhäuser in einer Datei
@@ -224,6 +248,5 @@ namespace Fahrzeugverwaltung
             SpeichernParkhaueser();
             SpeichernFahrzeuge();
         }
-
     }
 }

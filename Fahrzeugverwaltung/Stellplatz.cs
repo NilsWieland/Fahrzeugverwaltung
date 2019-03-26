@@ -31,5 +31,12 @@ namespace Fahrzeugverwaltung
         {
             return (Kennzeichen.Length == 0);
         }
+        
+        // Gibt true zurück, wenn der Stellplatz belegt ist
+        public bool BelegterStellplatz()
+        {
+            return (Kennzeichen.Length > 0);
+        }
+
     }
 }

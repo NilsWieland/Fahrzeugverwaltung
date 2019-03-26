@@ -37,6 +37,9 @@ namespace Fahrzeugverwaltung
             listViewParkhaeuser.View = View.Details;
             ViewParkhaeuser_Update();
 
+            // Erster Eintrag für Fahrzeugtyp (Alle) selektiert
+            comboBoxFahrzeugTyp.SelectedIndex = 0;
+
             // Stelle Fahrzeuge im Hauptfenster dar
             listViewFahrzeuge.View = View.Details;
             ViewFahrzeuge_Update();
@@ -49,8 +52,7 @@ namespace Fahrzeugverwaltung
             // Speicher alle Parkhäuser und Fahrzeuge
             Verwaltung.Speichern();
         }
-
-
+        
         // Aktualisiert die Darstellung der Parkhäuser im Hauptfenster
         private void ViewParkhaeuser_Update()
         {
@@ -83,7 +85,7 @@ namespace Fahrzeugverwaltung
                 ListviewZeile[5] = ph.AnzahlStellplaetze_Belegt_Typ("LKW").ToString() + " von " + ph.AnzahlStellplaetze_Typ("LKW").ToString();
 
                 // Spalte 7: Anzahl der Motorrad Stellplätze (Belegt/Frei)
-                ListviewZeile[6] = ph.AnzahlStellplaetze_Belegt_Typ("Motorad").ToString() + " von " + ph.AnzahlStellplaetze_Typ("Motorad").ToString();
+                ListviewZeile[6] = ph.AnzahlStellplaetze_Belegt_Typ("Motorrad").ToString() + " von " + ph.AnzahlStellplaetze_Typ("Motorrad").ToString();
 
                 // Füge neue Zeile  mit Parkhausdaten zum Listview hinzu
                 listViewParkhaeuser.Items.Add(new ListViewItem(ListviewZeile));
@@ -172,11 +174,43 @@ namespace Fahrzeugverwaltung
         // Aktualisiert die Darstellung der Fahrzeuge im Hauptfenster
         private void ViewFahrzeuge_Update()
         {
+            string GewaehlterFahrzeugTyp = comboBoxFahrzeugTyp.Text; 
+            string GewaehltesKennzeichen = textBoxKennzeichen.Text.Trim();
+
             // Gesamte über alle Fahrzeuge aufsummierte KFZ-Steuer
             float SteuerGesamt = 0f;
 
             // Lösche alle Einträge im Listview
             listViewFahrzeuge.Items.Clear();
+
+            // Spalten mit zusätzliche PKW-Daten  
+            if (GewaehlterFahrzeugTyp == "PKW")
+            {
+                columnUnbestimmt_1.Text = "Hubraum";
+                columnUnbestimmt_2.Text = "Leistung";
+                columnUnbestimmt_3.Text = "Schadstoffklasse";
+            }
+            // Spalten mit zusätzliche LKW-Daten  
+            else if (GewaehlterFahrzeugTyp == "LKW")
+            {
+                columnUnbestimmt_1.Text = "Achsen";
+                columnUnbestimmt_2.Text = "Zuladung";
+                columnUnbestimmt_3.Text = "";
+            }
+            // Spalten mit zusätzliche Motoraddaten
+            else if (GewaehlterFahrzeugTyp == "Motorrad")
+            {
+                columnUnbestimmt_1.Text = "Hubraum";
+                columnUnbestimmt_2.Text = "";
+                columnUnbestimmt_3.Text = "";
+            }
+            // Keine Zusatzdaten, wenn alle Fahrzeugtypen dargestellt werden
+            else
+            {
+                columnUnbestimmt_1.Text = "";
+                columnUnbestimmt_2.Text = "";
+                columnUnbestimmt_3.Text = "";
+            }
 
             // Füge die Daten aller Fahrzeuge zum Listview hinzu 
             for (int ii = 0; ii < Verwaltung.AnzahlFahrzeuge; ii++)
@@ -184,58 +218,96 @@ namespace Fahrzeugverwaltung
                 // Hole Fahrzeugobjekt aus der fahrzeugliste
                 Fahrzeug fz = Verwaltung.FahrzeugGet(ii);
 
-                // Addiere Steuer des Fahrzeuges zur Gesamtsteuer
-                float Steuer = fz.Steuer;
-                SteuerGesamt += Steuer;
-
-                // Alle dargestellten Daten eines Fahrzeuges werden in ein Array kopiert
-                // Das Array entspricht einer Zeile im Listview
-                // Jedes Array-Element entspricht dabei einer Spalte im Listview
-                string[] ListviewZeile = new string[9];
-
-                // Spalte 1: Typ
-                ListviewZeile[0] = fz.Typ;
-
-                // Spalte 2: Hersteller
-                ListviewZeile[1] = fz.Hersteller;
-
-                // Spalte 3: Modell
-                ListviewZeile[2] = fz.Modell;
-
-                // Spalte 4: Kennzeichen
-                ListviewZeile[3] = fz.Kennzeichen;
-
-                // Spalte 5: Parkhausnummer
-                if (fz.ParkhausNummer > 0)
-                { 
-                    ListviewZeile[4] = fz.ParkhausNummer.ToString();
-                }
-                else
+                // Filter für Fahrzeugtyp und Kennzeichen anwenden
+                // Gewaelter Fahrzeugtyp muss "Alle" sein oder Fahrzeug muss dem gewählten Typ entsprechen
+                //  und
+                // Eingegebenes Kennzeichen muss leer sein oder der Anfang des Fahrzeugkennzeichens sein
+                if (((GewaehlterFahrzeugTyp == "Alle")   || (fz.Typ == GewaehlterFahrzeugTyp)) &&
+                    ((GewaehltesKennzeichen.Length == 0) || (fz.Kennzeichen.IndexOf(GewaehltesKennzeichen) == 0)))
                 {
-                    ListviewZeile[4] = "-";
+                    // Addiere Steuer des Fahrzeuges zur Gesamtsteuer
+                    float Steuer = fz.Steuer;
+                    SteuerGesamt += Steuer;
+
+                    // Alle dargestellten Daten eines Fahrzeuges werden in ein Array kopiert
+                    // Das Array entspricht einer Zeile im Listview
+                    // Jedes Array-Element entspricht dabei einer Spalte im Listview
+                    string[] ListviewZeile = new string[12];
+
+                    // Spalte 1: Typ
+                    ListviewZeile[0] = fz.Typ;
+
+                    // Spalte 2: Hersteller
+                    ListviewZeile[1] = fz.Hersteller;
+
+                    // Spalte 3: Modell
+                    ListviewZeile[2] = fz.Modell;
+
+                    // Spalte 4: Kennzeichen
+                    ListviewZeile[3] = fz.Kennzeichen;
+
+                    // Spalte 5: Parkhausnummer
+                    if (fz.ParkhausNummer > 0)
+                    {
+                        ListviewZeile[4] = fz.ParkhausNummer.ToString();
+                    }
+                    else
+                    {
+                        ListviewZeile[4] = "-";
+                    }
+
+                    // Spalte 6: Stellplatznummer
+                    if (fz.StellplatzNummer > 0)
+                    {
+                        ListviewZeile[5] = fz.StellplatzNummer.ToString();
+                    }
+                    else
+                    {
+                        ListviewZeile[5] = "-";
+                    }
+
+                    // Spalte 7: Jahr der Erstzulassung
+                    ListviewZeile[6] = fz.Erstzulassung.ToString();
+
+                    // Spalte 8:  Anschaffungspreis in Euro mit 2 Nachkommastellen (C2)
+                    ListviewZeile[7] = String.Format("{0:C2}", fz.Anschaffungspreis);
+
+                    // Spalte 9:  Steuer in Euro mit 2 Nachkommastellen (C2)
+                    ListviewZeile[8] = String.Format("{0:C2}", Steuer);
+
+                    // Zusätzliche PKW-Daten  
+                    if (GewaehlterFahrzeugTyp == "PKW")
+                    {
+                        ListviewZeile[9]  = ((PKW)fz).Hubraum.ToString() + " ccm"; ;
+                        ListviewZeile[10] = ((PKW)fz).Leistung.ToString() + " kW"; ;
+                        ListviewZeile[11] = ((PKW)fz).Schadstoffklasse.ToString();
+                    }
+                    // Zusätzliche LKW-Daten  
+                    else if (GewaehlterFahrzeugTyp == "LKW")
+                    {
+                        ListviewZeile[9] = ((LKW)fz).AnzahlAchsen.ToString();
+                        ListviewZeile[10] = ((LKW)fz).Zuladung.ToString() + " t"; 
+                        ListviewZeile[11] = "";
+                    }
+                    // Zusätzliche Motorraddaten
+                    else if (GewaehlterFahrzeugTyp == "Motorrad")
+                    {
+                        ListviewZeile[9] = ((Motorrad)fz).Hubraum.ToString() + " ccm";
+                        ListviewZeile[10] = "";
+                        ListviewZeile[11] = "";
+                    }
+                    // Keine Zusatzdaten, wenn alle Fahrzeugtypen dargestellt werden
+                    else
+                    {
+                        ListviewZeile[9] = "";
+                        ListviewZeile[10] = "";
+                        ListviewZeile[11] = "";
+                    }
+
+
+                    // Füge neue Zeile  mit Fahrzeugdaten zum Listview hinzu
+                    listViewFahrzeuge.Items.Add(new ListViewItem(ListviewZeile));
                 }
-
-                // Spalte 6: Stellplatznummer
-                if (fz.StellplatzNummer > 0)
-                {
-                    ListviewZeile[5] = fz.StellplatzNummer.ToString();
-                }
-                else
-                {
-                    ListviewZeile[5] = "-";
-                }
-
-                // Spalte 7: Jahr der Erstzulassung
-                ListviewZeile[6] = fz.Erstzulassung.ToString();
-
-                // Spalte 8:  Anschaffungspreis in Euro mit 2 Nachkommastellen (C2)
-                ListviewZeile[7] = String.Format("{0:C2}", fz.Anschaffungspreis);
-
-                // Spalte 9:  Steuer in Euro mit 2 Nachkommastellen (C2)
-                ListviewZeile[8] = String.Format("{0:C2}",  Steuer);
-
-                // Füge neue Zeile  mit Fahrzeugdaten zum Listview hinzu
-                listViewFahrzeuge.Items.Add(new ListViewItem(ListviewZeile));
             }
             
             // Passe die Breite aller Spalten so an, dass alle Daten sichtbar sind
@@ -333,6 +405,22 @@ namespace Fahrzeugverwaltung
             FormFahrzeugBearbeiten form = new FormFahrzeugBearbeiten();
 
             form.ShowDialog();
+        }
+
+        // Wird aufgerufen, wenn sich der selektiert Fahrzeugtyp geändert hat
+        private void comboBoxFahrzeugTyp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Listview mit dem selektierten Fahrzeugtyp aktualisieren 
+            // Fahrzeuge, die nicht dem selektierten Typ entsprechen werden nicht dargestellt
+            ViewFahrzeuge_Update();
+        }
+
+        // Wird aufgerufen, wenn sich der Text in der Textbox Kennzeichen geändert hat
+        private void textBoxKennzeichen_TextChanged(object sender, EventArgs e)
+        {
+            // Listview mit dem eingegebenen Kennzeichen aktualsieren
+            // Fahrzeuge, die nicht das eingegebene Kennzeichen enthalten werden nicht dargestellt
+            ViewFahrzeuge_Update();
         }
     }
 }
