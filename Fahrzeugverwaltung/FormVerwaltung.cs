@@ -52,7 +52,13 @@ namespace Fahrzeugverwaltung
             // Speicher alle Parkhäuser und Fahrzeuge
             Verwaltung.Speichern();
         }
-        
+
+        private void View_Update()
+        {
+            ViewParkhaeuser_Update();
+            ViewFahrzeuge_Update();
+        }
+
         // Aktualisiert die Darstellung der Parkhäuser im Hauptfenster
         private void ViewParkhaeuser_Update()
         {
@@ -149,9 +155,10 @@ namespace Fahrzeugverwaltung
                     // Lösche selektiertes Parkhaus aus der Liste
                     Verwaltung.ParkhausLoeschen(listViewParkhaeuser.SelectedItems[ii].Index);
                 }
-                
-                // Die Darstellung der Parkhausdaten wird aktualisiert
-                ViewParkhaeuser_Update();
+
+                // Die Darstellung der Parkhausdaten und Fahrzeuge wird aktualisiert
+                // Die Darstellung der Fahrzeuge muss wegen der eventuell weggefallenen Stellplätze aktualisiert werden
+                View_Update();
 
                 // Der Fokus wird wieder auf den Listview gesetzt
                 listViewParkhaeuser.Select();
@@ -389,9 +396,10 @@ namespace Fahrzeugverwaltung
                     // Lösche selektiertes Fahrzeug aus der Liste
                     Verwaltung.FahrzeugLoeschen(listViewFahrzeuge.SelectedItems[ii].Index);
                 }
-                
-                // Die Darstellung der Fahrzeugdaten wird aktualisiert
-                ViewFahrzeuge_Update();
+
+                // Die Darstellung der Parkhausdaten und Fahrzeuge wird aktualisiert
+                // Die Darstellung der Parkhausdaten muss wegen der eventuell weggefallenen Stellplatzbelegung aktualisiert werden
+                View_Update();
 
                 // Der Fokus wird wieder auf den Listview gesetzt
                 listViewFahrzeuge.Select();
@@ -406,6 +414,15 @@ namespace Fahrzeugverwaltung
 
             form.ShowDialog();
         }
+
+        private void buttonStellplatzZuweisen_Click(object sender, EventArgs e)
+        {
+
+            // Die Darstellung der Parkhausdaten und Fahrzeuge wird aktualisiert
+            // Die Darstellung der Parkhausdaten muss wegen der hinzugekommenen Stellplatzbelegung aktualisiert werden
+            View_Update();
+        }
+
 
         // Wird aufgerufen, wenn sich der selektiert Fahrzeugtyp geändert hat
         private void comboBoxFahrzeugTyp_SelectedIndexChanged(object sender, EventArgs e)
@@ -422,5 +439,6 @@ namespace Fahrzeugverwaltung
             // Fahrzeuge, die nicht das eingegebene Kennzeichen enthalten werden nicht dargestellt
             ViewFahrzeuge_Update();
         }
+
     }
 }

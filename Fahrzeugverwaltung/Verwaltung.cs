@@ -53,6 +53,7 @@ namespace Fahrzeugverwaltung
         public void FahrzeugHinzufuegen(Fahrzeug value)
         {
             Fahrzeuge.Add(value);
+            StellplaetzeZuordnen();
         }
         
         // Löscht das Parkhaus mit der Nummer id
@@ -62,6 +63,7 @@ namespace Fahrzeugverwaltung
             if ((id >= 0) && (id < AnzahlParkhaeuser))
             {
                 Parkhaeuser.RemoveAt(id);
+                StellplaetzeZuordnen();
             }
         }
 
@@ -72,6 +74,7 @@ namespace Fahrzeugverwaltung
             if ((id >= 0) && (id < AnzahlFahrzeuge))
             {
                 Fahrzeuge.RemoveAt(id);
+                StellplaetzeZuordnen();
             }
         }
 
@@ -114,25 +117,18 @@ namespace Fahrzeugverwaltung
             // Hach dem Erzeugen des Parkhaus sind alle Stellplätze als PKW-Stellplätze voreingestellt
             // Erzeuge 5 Motorradstellplätze
             Parkhaus ph = Parkhaeuser[0];
+            ph.StellPlaetze[199].Typ = "Motorrad";
             ph.StellPlaetze[200].Typ = "Motorrad";
             ph.StellPlaetze[201].Typ = "Motorrad";
             ph.StellPlaetze[202].Typ = "Motorrad";
             ph.StellPlaetze[203].Typ = "Motorrad";
-            ph.StellPlaetze[204].Typ = "Motorrad";
 
             // Erzeuge 5 LKW-Stellplätze
+            ph.StellPlaetze[299].Typ = "LKW";
             ph.StellPlaetze[300].Typ = "LKW";
             ph.StellPlaetze[301].Typ = "LKW";
             ph.StellPlaetze[302].Typ = "LKW";
             ph.StellPlaetze[303].Typ = "LKW";
-            ph.StellPlaetze[304].Typ = "LKW";
-
-            // Weise Fahrzeuge den Stellplätzen zu
-            ph.StellPlaetze[100].Kennzeichen = "K-GS-01";
-            ph.StellPlaetze[101].Kennzeichen = "K-GS-02";
-            ph.StellPlaetze[200].Kennzeichen = "K-GS-03";
-            ph.StellPlaetze[201].Kennzeichen = "K-GS-05";
-            ph.StellPlaetze[300].Kennzeichen = "K-GS-04";
         }
 
         // Speichert die Daten aller Parkhäuser in einer Datei
@@ -240,6 +236,7 @@ namespace Fahrzeugverwaltung
         {
             LadenParkhaueser();
             LadenFahrzeuge();
+            StellplaetzeZuordnen();
         }
 
         // Speichert alle Daten (Fahrzeuge und Parkhäuser)
@@ -247,6 +244,77 @@ namespace Fahrzeugverwaltung
         {
             SpeichernParkhaueser();
             SpeichernFahrzeuge();
+        }
+
+        // Trägt das Kennzeichen jedes Fahrzeugs, das einen Stellplatzeintag besitzt, 
+        // in den jeweiligen Stellplatz des jeweiligen Parkhauses ein.
+        // Die Funktion muss nach folgenden Aktionen aufgerufen werden:
+        //    - nach dem Laden der Parkhäuser und Fahrzeuge
+        //    - nach dem Löschen eines Fahrzeuges
+        //    - nach dem Hinzufügen eines Fahrzeuges
+        //    - nach der Zuweisung eines Stellplatzes zu einem Parkhaus
+        //    - nach dem Löschen eines Parkhauses
+        private void StellplaetzeZuordnen()
+        {
+            // Alle Zuweisungen in allen Parkhäusern löschen
+            for (int iParkhaus = 0; iParkhaus < AnzahlParkhaeuser; iParkhaus++)
+            {
+                Parkhaus ph = Parkhaeuser[iParkhaus];
+
+                // Lösche alle Kennzeichen aus allen Stellplätzen
+                for (int iStellplatz = 0; iStellplatz < ph.AnzahlStellplaetze; iStellplatz++)
+                {
+                    ph.StellPlaetze[iStellplatz].Kennzeichen = "";
+                }
+            }
+
+            // Suche für alle Fahrzeuge den Stellplatz
+            for (int iFahrzeug = 0; iFahrzeug < AnzahlFahrzeuge; iFahrzeug++)
+            {
+                Fahrzeug fz = Fahrzeuge[iFahrzeug];
+
+                int ZugeordnetesParkhaus = fz.ParkhausNummer;
+                int ZugeordneterStellplatz = fz.StellplatzNummer;
+
+                if ((ZugeordnetesParkhaus > 0) && (ZugeordneterStellplatz > 0))
+                {
+                    // Wird auf true gesetzt, wenn Stellplatz gefunden wurde
+                    bool StellplatzGefunden = false;
+
+                    // Suche zugeordnetes Parkhause
+                    for (int iParkhaus = 0; (iParkhaus < AnzahlParkhaeuser) && (StellplatzGefunden == false); iParkhaus++)
+                    {
+                        Parkhaus ph = Parkhaeuser[iParkhaus];
+                        if (ph.ParkhausNummer == ZugeordnetesParkhaus)
+                        {
+                            // Suche zugeordneten Stellplatz
+                            for (int iStellplatz = 0; (iStellplatz < ph.AnzahlStellplaetze) && (StellplatzGefunden == false); iStellplatz++)
+                            {
+                                Stellplatz sp = ph.StellPlaetze[iStellplatz];
+                                // Zuweisung wenn 
+                                //   - Stellplatznummer übereinstimmt und
+                                //   - Stellplatztyp mit FAhrzeugtyp übereinstimmt und
+                                //   - Stellplatz frei ist
+                                if ((ZugeordneterStellplatz == sp.Nummer) && 
+                                    (sp.Typ == fz.Typ) &&
+                                    (sp.Kennzeichen.Length == 0))
+                                {
+                                    sp.Kennzeichen = fz.Kennzeichen;
+                                    StellplatzGefunden = true;
+                                }
+                            }
+                        }
+                    }
+                    // Lösche Stellplatzzuordnung im Fahrzeug, 
+                    //  - wenn der Stellplatz nicht gefunden wurde oder 
+                    //  - wenn der Stellplatz nicht frei ist
+                    if (StellplatzGefunden == false)
+                    {
+                        fz.ParkhausNummer = 0;
+                        fz.StellplatzNummer = 0;
+                    }
+                }
+            }
         }
     }
 }

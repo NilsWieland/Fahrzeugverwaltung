@@ -64,9 +64,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.labelSteuerGesamt = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.textBoxKennzeichen = new System.Windows.Forms.TextBox();
+            this.buttonStellplatzZuweisen = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -304,10 +305,12 @@
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.ColumnCount = 4;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.Controls.Add(this.buttonStellplatzZuweisen, 3, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonFahrzeugHinzufuegen, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonFahrzeugEntfernen, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonFahrzeugBearbeiten, 2, 0);
@@ -326,7 +329,7 @@
             this.buttonFahrzeugHinzufuegen.Location = new System.Drawing.Point(2, 2);
             this.buttonFahrzeugHinzufuegen.Margin = new System.Windows.Forms.Padding(2);
             this.buttonFahrzeugHinzufuegen.Name = "buttonFahrzeugHinzufuegen";
-            this.buttonFahrzeugHinzufuegen.Size = new System.Drawing.Size(255, 34);
+            this.buttonFahrzeugHinzufuegen.Size = new System.Drawing.Size(190, 34);
             this.buttonFahrzeugHinzufuegen.TabIndex = 0;
             this.buttonFahrzeugHinzufuegen.Text = "Hinzufügen";
             this.buttonFahrzeugHinzufuegen.UseVisualStyleBackColor = true;
@@ -336,10 +339,10 @@
             // 
             this.buttonFahrzeugEntfernen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonFahrzeugEntfernen.Enabled = false;
-            this.buttonFahrzeugEntfernen.Location = new System.Drawing.Point(261, 2);
+            this.buttonFahrzeugEntfernen.Location = new System.Drawing.Point(196, 2);
             this.buttonFahrzeugEntfernen.Margin = new System.Windows.Forms.Padding(2);
             this.buttonFahrzeugEntfernen.Name = "buttonFahrzeugEntfernen";
-            this.buttonFahrzeugEntfernen.Size = new System.Drawing.Size(255, 34);
+            this.buttonFahrzeugEntfernen.Size = new System.Drawing.Size(190, 34);
             this.buttonFahrzeugEntfernen.TabIndex = 1;
             this.buttonFahrzeugEntfernen.Text = "Löschen";
             this.buttonFahrzeugEntfernen.UseVisualStyleBackColor = true;
@@ -349,10 +352,10 @@
             // 
             this.buttonFahrzeugBearbeiten.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonFahrzeugBearbeiten.Enabled = false;
-            this.buttonFahrzeugBearbeiten.Location = new System.Drawing.Point(520, 2);
+            this.buttonFahrzeugBearbeiten.Location = new System.Drawing.Point(390, 2);
             this.buttonFahrzeugBearbeiten.Margin = new System.Windows.Forms.Padding(2);
             this.buttonFahrzeugBearbeiten.Name = "buttonFahrzeugBearbeiten";
-            this.buttonFahrzeugBearbeiten.Size = new System.Drawing.Size(255, 34);
+            this.buttonFahrzeugBearbeiten.Size = new System.Drawing.Size(190, 34);
             this.buttonFahrzeugBearbeiten.TabIndex = 2;
             this.buttonFahrzeugBearbeiten.Text = "Bearbeiten";
             this.buttonFahrzeugBearbeiten.UseVisualStyleBackColor = true;
@@ -368,7 +371,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
             this.tableLayoutPanel4.Controls.Add(this.comboBoxFahrzeugTyp, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.label3, 6, 0);
@@ -433,17 +436,6 @@
             this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 6;
             // 
-            // label5
-            // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(215, 7);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(107, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Kennzeichen suchen";
-            // 
             // labelSteuerGesamt
             // 
             this.labelSteuerGesamt.AutoSize = true;
@@ -456,6 +448,17 @@
             this.labelSteuerGesamt.TabIndex = 7;
             this.labelSteuerGesamt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // label5
+            // 
+            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(215, 7);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(107, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Kennzeichen suchen";
+            // 
             // textBoxKennzeichen
             // 
             this.textBoxKennzeichen.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -464,6 +467,19 @@
             this.textBoxKennzeichen.Size = new System.Drawing.Size(112, 20);
             this.textBoxKennzeichen.TabIndex = 10;
             this.textBoxKennzeichen.TextChanged += new System.EventHandler(this.textBoxKennzeichen_TextChanged);
+            // 
+            // buttonStellplatzZuweisen
+            // 
+            this.buttonStellplatzZuweisen.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonStellplatzZuweisen.Enabled = false;
+            this.buttonStellplatzZuweisen.Location = new System.Drawing.Point(584, 2);
+            this.buttonStellplatzZuweisen.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonStellplatzZuweisen.Name = "buttonStellplatzZuweisen";
+            this.buttonStellplatzZuweisen.Size = new System.Drawing.Size(191, 34);
+            this.buttonStellplatzZuweisen.TabIndex = 3;
+            this.buttonStellplatzZuweisen.Text = "Stellplatz zuweisen";
+            this.buttonStellplatzZuweisen.UseVisualStyleBackColor = true;
+            this.buttonStellplatzZuweisen.Click += new System.EventHandler(this.buttonStellplatzZuweisen_Click);
             // 
             // FormVerwaltung
             // 
@@ -527,6 +543,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label labelSteuerGesamt;
         private System.Windows.Forms.TextBox textBoxKennzeichen;
+        private System.Windows.Forms.Button buttonStellplatzZuweisen;
     }
 }
 
