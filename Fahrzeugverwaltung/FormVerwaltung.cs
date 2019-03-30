@@ -134,10 +134,26 @@ namespace Fahrzeugverwaltung
 
         private void buttonParkhausHinzufuegen_Click(object sender, EventArgs e)
         {
-            // Dialog ist noch nicht implementiert                
+            // Erzeuge Parkhaus Hinzufuegen Dialog Objekt
+            // Als Parkhausnummer wird die Anzahl der Parkhäuser + 1 genommen
+            FormParkhausHinzufuegen form = new FormParkhausHinzufuegen(Verwaltung.AnzahlParkhaeuser + 1);
 
-            FormParkhausHinzufuegen form = new FormParkhausHinzufuegen();
+            // Zeige Dialog
+            // Die Funktion wird erst beendet, nachdem Dialog-Fenster geschlossen wurde
             form.ShowDialog();
+
+            // Prüfen ob Dialog mit OK beendet wurde
+            if (form.DialogResult == DialogResult.OK)
+            {
+                // Neues Parkhaus zur Parkhausliste hinzufuegen, wenn Dialog mit OK beendet wurde
+                // Das Parkhaus wurde vom Dialog erzeugt und kann von außen gelesen werden (form.Parkhaus)
+                Verwaltung.ParkhausHinzufuegen(form.Parkhaus);
+
+                // Die Darstellung der Parkhausdaten wird aktualisiert
+                ViewParkhaeuser_Update();
+            }
+
+            // Der Fokus wird wieder auf den Fahrzeug Listview gesetzt
             listViewParkhaeuser.Select();
         }
 
@@ -346,16 +362,24 @@ namespace Fahrzeugverwaltung
             }
             if (listViewFahrzeuge.SelectedItems.Count == 1)
             {
-                // 1 Eintrag selektiert, Bearbeiten-Button aktiv
+                // 1 Fahrzeug ausgewählt
+                //   Fahrzeug bearbeiten -Button aktiv und 
+                //   Stellplatz zuweisen -Button aktiv
                 buttonFahrzeugBearbeiten.Enabled = true;
+                buttonStellplatzZuweisen.Enabled = true;
             }
             else
             {
-                // 0 oder mehr als 1 Eintrag selektiert, Bearbeiten-Button nicht aktiv
+                // 0 oder mehr als 1 Fahrzeug ausgewählt
+                //   Fahrzeug bearbeiten - Button nicht aktiv und 
+                //   Stellplatz zuweisen - Button nicht aktiv
                 buttonFahrzeugBearbeiten.Enabled = false;
+                buttonStellplatzZuweisen.Enabled = false;
             }
         }
 
+        // Funktion wird aufgerufen, wenn der Fahrzeug hinzufuegen Button gedrückt wurde
+        // Die Funktion öffnet einen Dialog, in dem ein neues Fahrzeug erzeugt werden kann
         private void buttonFahrzeugHinzufuegen_Click(object sender, EventArgs e)
         {
             // Erzeuge FahrzeugHinzufuegen Dialog Objekt
@@ -378,10 +402,10 @@ namespace Fahrzeugverwaltung
 
             // Der Fokus wird wieder auf den Fahrzeug Listview gesetzt
             listViewFahrzeuge.Select();
-
         }
 
         // Funktion wird aufgerufen wenn der "Löschen" Button gedrückt wurde
+        // Alle ausgeählten Fahrzeuge werden gelöscht
         private void buttonFahrzeugEntfernen_Click(object sender, EventArgs e)
         {
             // Nur löschen wenn mindestens ein Fahrzeug im Listview selektiert wurde 
@@ -406,6 +430,8 @@ namespace Fahrzeugverwaltung
             }
         }
 
+        // Funktion wird aufgerufen, wenn der Fahrzeug bearbeiten Button gedrückt wurde
+        // Die Funktion öffnet einen Dialog, in dem die Daten des ausgewählten Fahrzeugs bearbeitet werden können
         private void buttonFahrzeugBearbeiten_Click(object sender, EventArgs e)
         {
             // Dialog ist noch nicht implementiert    
@@ -415,14 +441,39 @@ namespace Fahrzeugverwaltung
             form.ShowDialog();
         }
 
+        // Funktion wird aufgerufen, wenn der Stellplatz zuweisen Button gedrückt wurde
+        // Die Funktion öffnet einen Dialog, in welchem dem ausgewählten Fahrzeug 
+        //   ein Parkhaus und ein Stellplatz zugewiesen werden kann
         private void buttonStellplatzZuweisen_Click(object sender, EventArgs e)
         {
+            if (listViewFahrzeuge.SelectedItems.Count == 1)
+            {
+                // Hole Index des selktierten Eintrags
+                int ListviewIndex = listViewFahrzeuge.SelectedItems[0].Index;
 
-            // Die Darstellung der Parkhausdaten und Fahrzeuge wird aktualisiert
-            // Die Darstellung der Parkhausdaten muss wegen der hinzugekommenen Stellplatzbelegung aktualisiert werden
-            View_Update();
+                // Hole Fahrzeug mit dem Index aus Liste
+                Fahrzeug fz = Verwaltung.FahrzeugGet(ListviewIndex);
+
+                // Erzeuge neues Dialog-Objekt
+                FormStellplatzZuweisen form = new FormStellplatzZuweisen(Verwaltung, fz);
+
+                // Setzte Title des Dialogs mit Typ und Kennzeichen des Fahrzeugs
+                form.Text = "Stellplatz zuweisen für " + fz.Typ + " " + fz.Kennzeichen;
+                form.ShowDialog();
+
+                // Prüfen ob Dialog mit OK beendet wurde
+                if (form.DialogResult == DialogResult.OK)
+                {
+                    // Die Darstellung der Parkhausdaten und Fahrzeuge wird aktualisiert
+                    View_Update();
+                }
+
+                // Der Fokus wird wieder auf den vorher selektierten Eintrag gestzt
+                listViewFahrzeuge.Select();
+                listViewFahrzeuge.Items[ListviewIndex].Focused = true;
+                listViewFahrzeuge.Items[ListviewIndex].Selected = true;
+            }
         }
-
 
         // Wird aufgerufen, wenn sich der selektiert Fahrzeugtyp geändert hat
         private void comboBoxFahrzeugTyp_SelectedIndexChanged(object sender, EventArgs e)
@@ -439,6 +490,5 @@ namespace Fahrzeugverwaltung
             // Fahrzeuge, die nicht das eingegebene Kennzeichen enthalten werden nicht dargestellt
             ViewFahrzeuge_Update();
         }
-
     }
 }

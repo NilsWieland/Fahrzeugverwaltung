@@ -69,7 +69,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(630, 311);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(630, 312);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -81,7 +81,7 @@
             this.tableLayoutPanel3.Controls.Add(this.buttonUebernehmen, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonAbbrechen, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 274);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 275);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -147,13 +147,13 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(624, 238);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(624, 239);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // textBoxUnbestimmt_3
             // 
             this.textBoxUnbestimmt_3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxUnbestimmt_3.Location = new System.Drawing.Point(332, 210);
+            this.textBoxUnbestimmt_3.Location = new System.Drawing.Point(332, 211);
             this.textBoxUnbestimmt_3.Name = "textBoxUnbestimmt_3";
             this.textBoxUnbestimmt_3.Size = new System.Drawing.Size(200, 20);
             this.textBoxUnbestimmt_3.TabIndex = 9;
@@ -219,9 +219,9 @@
             this.labelHersteller.AutoSize = true;
             this.labelHersteller.Location = new System.Drawing.Point(3, 8);
             this.labelHersteller.Name = "labelHersteller";
-            this.labelHersteller.Size = new System.Drawing.Size(51, 13);
+            this.labelHersteller.Size = new System.Drawing.Size(135, 13);
             this.labelHersteller.TabIndex = 0;
-            this.labelHersteller.Text = "Hersteller";
+            this.labelHersteller.Text = "Hersteller (2 - 100 Zeichen)";
             // 
             // labelUnbestimmt_3
             // 
@@ -259,9 +259,9 @@
             this.labelKennzeichen.AutoSize = true;
             this.labelKennzeichen.Location = new System.Drawing.Point(3, 124);
             this.labelKennzeichen.Name = "labelKennzeichen";
-            this.labelKennzeichen.Size = new System.Drawing.Size(69, 13);
+            this.labelKennzeichen.Size = new System.Drawing.Size(147, 13);
             this.labelKennzeichen.TabIndex = 3;
-            this.labelKennzeichen.Text = "Kennzeichen";
+            this.labelKennzeichen.Text = "Kennzeichen (5 - 11 Zeichen)";
             // 
             // labelAnschaffungspreis
             // 
@@ -269,9 +269,9 @@
             this.labelAnschaffungspreis.AutoSize = true;
             this.labelAnschaffungspreis.Location = new System.Drawing.Point(3, 95);
             this.labelAnschaffungspreis.Name = "labelAnschaffungspreis";
-            this.labelAnschaffungspreis.Size = new System.Drawing.Size(94, 13);
+            this.labelAnschaffungspreis.Size = new System.Drawing.Size(169, 13);
             this.labelAnschaffungspreis.TabIndex = 2;
-            this.labelAnschaffungspreis.Text = "Anschaffungspreis";
+            this.labelAnschaffungspreis.Text = "Anschaffungspreis (0 - 1000000 €)";
             // 
             // labelErstzulassung
             // 
@@ -279,9 +279,9 @@
             this.labelErstzulassung.AutoSize = true;
             this.labelErstzulassung.Location = new System.Drawing.Point(3, 66);
             this.labelErstzulassung.Name = "labelErstzulassung";
-            this.labelErstzulassung.Size = new System.Drawing.Size(95, 13);
+            this.labelErstzulassung.Size = new System.Drawing.Size(166, 13);
             this.labelErstzulassung.TabIndex = 1;
-            this.labelErstzulassung.Text = "Jahr Erstzulassung";
+            this.labelErstzulassung.Text = "Jahr Erstzulassung (1900 bis jetzt)";
             // 
             // labelModel
             // 
@@ -289,9 +289,9 @@
             this.labelModel.AutoSize = true;
             this.labelModel.Location = new System.Drawing.Point(3, 37);
             this.labelModel.Name = "labelModel";
-            this.labelModel.Size = new System.Drawing.Size(38, 13);
+            this.labelModel.Size = new System.Drawing.Size(122, 13);
             this.labelModel.TabIndex = 9;
-            this.labelModel.Text = "Modell";
+            this.labelModel.Text = "Modell (2 - 100 Zeichen)";
             // 
             // textBoxHersteller
             // 
@@ -323,11 +323,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonAbbrechen;
-            this.ClientSize = new System.Drawing.Size(630, 311);
+            this.ClientSize = new System.Drawing.Size(630, 312);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormFahrzeugHinzufuegen";
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "Fahrzeughinzufügen";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);

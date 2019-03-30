@@ -120,7 +120,8 @@ namespace Fahrzeugverwaltung
         // Prüfe und kopiere Erstzulassung
         public static bool TextToErstzulassung(string Text, out int Erstzulassung)
         {
-            return PruefeInteger(Text, 1900, 2100, out Erstzulassung);
+            // Prüfe Datum 1900 bis jetzt
+            return PruefeInteger(Text, 1900, DateTime.Now.Year, out Erstzulassung);
         }
 
         // Prüfe und kopiere Anschaffungspreis

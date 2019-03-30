@@ -79,6 +79,12 @@
     <Compile Include="FormParkhausBearbeiten.Designer.cs">
       <DependentUpon>FormParkhausBearbeiten.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStellplatzZuweisen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStellplatzZuweisen.Designer.cs">
+      <DependentUpon>FormStellplatzZuweisen.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormVerwaltung.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormParkhausBearbeiten.resx">
       <DependentUpon>FormParkhausBearbeiten.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStellplatzZuweisen.resx">
+      <DependentUpon>FormStellplatzZuweisen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormVerwaltung.resx">
       <DependentUpon>FormVerwaltung.cs</DependentUpon>

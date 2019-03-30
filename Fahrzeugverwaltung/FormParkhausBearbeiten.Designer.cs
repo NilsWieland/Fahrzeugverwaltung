@@ -49,8 +49,13 @@
             this.ClientSize = new System.Drawing.Size(479, 470);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormParkhausBearbeiten";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "Parkhaus bearbeiten";
             this.ResumeLayout(false);
             this.PerformLayout();

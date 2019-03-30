@@ -53,17 +53,58 @@ namespace Fahrzeugverwaltung
         public void FahrzeugHinzufuegen(Fahrzeug value)
         {
             Fahrzeuge.Add(value);
-            StellplaetzeZuordnen();
+
+            // Aktualisiert die Stellplatzzuordnugen in allen Parkhäusern
+            StellplatzZuordnungAktualisieren();
         }
-        
+
+        // Weist einem Fahrzeug ein Parkhaus mit Stellplatz zu
+        public void StellplatzZuweisen(Fahrzeug fz, int ParkhausNummer, int StellplatzNummer)
+        {
+            if ((ParkhausNummer > 0) && (StellplatzNummer > 0))
+            {
+                // Parkhaus suchen
+                for (int iParkhaus = 0; iParkhaus < AnzahlParkhaeuser; iParkhaus++)
+                {
+                    Parkhaus ph = ParkhausGet(iParkhaus);
+                    if (ph.ParkhausNummer == ParkhausNummer)
+                    {
+                        // Parkhaus gefunden, Stellplatz suchen
+                        for (int iStellplatz = 0; iStellplatz < ph.AnzahlStellplaetze; iStellplatz++)
+                        {
+                            Stellplatz sp = ph.StellPlaetze[iStellplatz];
+                            if (sp.Nummer == StellplatzNummer)
+                            {
+                                // Stellplatz gefunden, Parkhaus und Stellplatz dem Fahrzeug zuweisen
+                                fz.ParkhausNummer = ph.ParkhausNummer;
+                                fz.StellplatzNummer = sp.Nummer;
+                            }
+                        }
+                    }
+                }
+            }
+            // Stellplatzzuweisung löschen
+            else
+            {
+                fz.ParkhausNummer = 0;
+                fz.StellplatzNummer = 0;
+            }
+
+            // Aktualisiert die Stellplatzzuordnugen in allen Parkhäusern
+            StellplatzZuordnungAktualisieren();
+        }
+
         // Löscht das Parkhaus mit der Nummer id
         public void ParkhausLoeschen(int id)
         {
             // Parkhaus nur dann löschen wenn der Index kleiner als die Anzahl der Parkhäuser ist
             if ((id >= 0) && (id < AnzahlParkhaeuser))
             {
+                // Entferne Parkhaus aus Liste
                 Parkhaeuser.RemoveAt(id);
-                StellplaetzeZuordnen();
+
+                // Aktualisiert die Stellplatzzuordnugen in allen Parkhäusern
+                StellplatzZuordnungAktualisieren();
             }
         }
 
@@ -73,8 +114,11 @@ namespace Fahrzeugverwaltung
             // Fahrzeug nur dann löschen wenn der Index kleiner als die Anzahl der Fahrzeuge ist
             if ((id >= 0) && (id < AnzahlFahrzeuge))
             {
+                // Entferne Fahrzeug aus Liste
                 Fahrzeuge.RemoveAt(id);
-                StellplaetzeZuordnen();
+                
+                // Aktualisiert die Stellplatzzuordnugen in allen Parkhäusern
+                StellplatzZuordnungAktualisieren();
             }
         }
 
@@ -116,19 +160,29 @@ namespace Fahrzeugverwaltung
 
             // Hach dem Erzeugen des Parkhaus sind alle Stellplätze als PKW-Stellplätze voreingestellt
             // Erzeuge 5 Motorradstellplätze
-            Parkhaus ph = Parkhaeuser[0];
-            ph.StellPlaetze[199].Typ = "Motorrad";
-            ph.StellPlaetze[200].Typ = "Motorrad";
-            ph.StellPlaetze[201].Typ = "Motorrad";
-            ph.StellPlaetze[202].Typ = "Motorrad";
-            ph.StellPlaetze[203].Typ = "Motorrad";
+            Parkhaeuser[0].StellPlaetze[199].Typ = "Motorrad";
+            Parkhaeuser[0].StellPlaetze[200].Typ = "Motorrad";
+            Parkhaeuser[0].StellPlaetze[201].Typ = "Motorrad";
+            Parkhaeuser[0].StellPlaetze[202].Typ = "Motorrad";
+            Parkhaeuser[0].StellPlaetze[203].Typ = "Motorrad";
 
             // Erzeuge 5 LKW-Stellplätze
-            ph.StellPlaetze[299].Typ = "LKW";
-            ph.StellPlaetze[300].Typ = "LKW";
-            ph.StellPlaetze[301].Typ = "LKW";
-            ph.StellPlaetze[302].Typ = "LKW";
-            ph.StellPlaetze[303].Typ = "LKW";
+            Parkhaeuser[0].StellPlaetze[299].Typ = "LKW";
+            Parkhaeuser[0].StellPlaetze[300].Typ = "LKW";
+            Parkhaeuser[0].StellPlaetze[301].Typ = "LKW";
+            Parkhaeuser[0].StellPlaetze[302].Typ = "LKW";
+            Parkhaeuser[0].StellPlaetze[303].Typ = "LKW";
+
+            // Erzeuge 2. Parkhaus
+            Parkhaeuser.Add(new Parkhaus(2, 200, "51105", "Köln", "Neumarkt. 99"));
+
+            // Hach dem Erzeugen des Parkhaus sind alle Stellplätze als PKW-Stellplätze voreingestellt
+            // Erzeuge 5 Motorradstellplätze
+            Parkhaeuser[1].StellPlaetze[150].Typ = "Motorrad";
+            Parkhaeuser[1].StellPlaetze[151].Typ = "Motorrad";
+            Parkhaeuser[1].StellPlaetze[152].Typ = "Motorrad";
+            Parkhaeuser[1].StellPlaetze[153].Typ = "Motorrad";
+            Parkhaeuser[1].StellPlaetze[154].Typ = "Motorrad";
         }
 
         // Speichert die Daten aller Parkhäuser in einer Datei
@@ -236,7 +290,9 @@ namespace Fahrzeugverwaltung
         {
             LadenParkhaueser();
             LadenFahrzeuge();
-            StellplaetzeZuordnen();
+
+            // Aktualisiert die Stellplatzzuordnugen in allen Parkhäusern
+            StellplatzZuordnungAktualisieren();
         }
 
         // Speichert alle Daten (Fahrzeuge und Parkhäuser)
@@ -254,9 +310,9 @@ namespace Fahrzeugverwaltung
         //    - nach dem Hinzufügen eines Fahrzeuges
         //    - nach der Zuweisung eines Stellplatzes zu einem Parkhaus
         //    - nach dem Löschen eines Parkhauses
-        private void StellplaetzeZuordnen()
+        private void StellplatzZuordnungAktualisieren()
         {
-            // Alle Zuweisungen in allen Parkhäusern löschen
+            // Alle Stellplatzzuweisungen in allen Parkhäusern löschen
             for (int iParkhaus = 0; iParkhaus < AnzahlParkhaeuser; iParkhaus++)
             {
                 Parkhaus ph = Parkhaeuser[iParkhaus];
@@ -268,7 +324,7 @@ namespace Fahrzeugverwaltung
                 }
             }
 
-            // Suche für alle Fahrzeuge den Stellplatz
+            // Suche für alle Fahrzeuge mit zugeordenten Stellplatz das Stellplatzobjekt
             for (int iFahrzeug = 0; iFahrzeug < AnzahlFahrzeuge; iFahrzeug++)
             {
                 Fahrzeug fz = Fahrzeuge[iFahrzeug];
@@ -276,6 +332,7 @@ namespace Fahrzeugverwaltung
                 int ZugeordnetesParkhaus = fz.ParkhausNummer;
                 int ZugeordneterStellplatz = fz.StellplatzNummer;
 
+                // Für gültige Stellplatzzuordnung müssen Parkhaus- und Stellplatznummer größer 0 sein
                 if ((ZugeordnetesParkhaus > 0) && (ZugeordneterStellplatz > 0))
                 {
                     // Wird auf true gesetzt, wenn Stellplatz gefunden wurde
@@ -287,13 +344,13 @@ namespace Fahrzeugverwaltung
                         Parkhaus ph = Parkhaeuser[iParkhaus];
                         if (ph.ParkhausNummer == ZugeordnetesParkhaus)
                         {
-                            // Suche zugeordneten Stellplatz
+                            // Parkhaus gefunden, suche zugeordneten Stellplatz
                             for (int iStellplatz = 0; (iStellplatz < ph.AnzahlStellplaetze) && (StellplatzGefunden == false); iStellplatz++)
                             {
                                 Stellplatz sp = ph.StellPlaetze[iStellplatz];
                                 // Zuweisung wenn 
                                 //   - Stellplatznummer übereinstimmt und
-                                //   - Stellplatztyp mit FAhrzeugtyp übereinstimmt und
+                                //   - Stellplatztyp mit Fahrzeugtyp übereinstimmt und
                                 //   - Stellplatz frei ist
                                 if ((ZugeordneterStellplatz == sp.Nummer) && 
                                     (sp.Typ == fz.Typ) &&
@@ -306,7 +363,7 @@ namespace Fahrzeugverwaltung
                         }
                     }
                     // Lösche Stellplatzzuordnung im Fahrzeug, 
-                    //  - wenn der Stellplatz nicht gefunden wurde oder 
+                    //  - wenn der Parkhaus oder Stellplatz nicht gefunden wurde oder 
                     //  - wenn der Stellplatz nicht frei ist
                     if (StellplatzGefunden == false)
                     {

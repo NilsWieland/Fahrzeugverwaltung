@@ -79,5 +79,95 @@ namespace Fahrzeugverwaltung
             }
             return StellplatzZaehler;
         }
+
+        // Prüfe und kopiere Ort
+        public static bool TextToOrt(string Text, out string Ort)
+        {
+            bool DatenOk = true;
+
+            // Entferne Leerzeichen am Anfang und am Ende
+            Text = Text.Trim();
+
+            // Prüfe Textlänge
+            if ((Text.Length > 1) && (Text.Length < 100))
+            {
+                // Textlänge ist OK
+                Ort = Text;
+            }
+            else
+            {
+                // Daten sind nicht OK
+                DatenOk = false;
+                Ort = "";
+            }
+            return DatenOk;
+        }
+
+        // Prüfe und kopiere Strasse
+        public static bool TextToStrasse(string Text, out string Strasse)
+        {
+            bool DatenOk = true;
+
+            // Entferne Leerzeichen am Anfang und am Ende
+            Text = Text.Trim();
+
+            // Prüfe Textlänge
+            if ((Text.Length > 1) && (Text.Length < 100))
+            {
+                // Textlänge ist OK
+                Strasse = Text;
+            }
+            else
+            {
+                // Daten sind nicht OK
+                DatenOk = false;
+                Strasse = "";
+            }
+            return DatenOk;
+        }
+
+        // Prüfe und kopiere PLZ
+        public static bool TextToPLZ(string Text, out string PLZ)
+        {
+            bool DatenOk = true;
+
+            // Entferne Leerzeichen am Anfang und am Ende
+            Text = Text.Trim();
+
+            // Prüfe Textlänge
+            if ((Text.Length > 4) && (Text.Length < 10))
+            {
+                // Textlänge ist OK
+                PLZ = Text;
+            }
+            else
+            {
+                // Daten sind nicht OK
+                DatenOk = false;
+                PLZ = "";
+            }
+            return DatenOk;
+
+        }
+
+        // Prüfe und kopiere Anzahl der Stellplätze
+        public static bool TextToAnzahlStellplaetze(string Text, out int AnzahlStellplaetze)
+        {
+            // PLZ muss zwischen 10000 und 99999 liegen
+            return PruefeInteger(Text, 1, 1000, out AnzahlStellplaetze);
+        }
+
+        // Wandelt String in int-Wert um und prüft Wertebereich.
+        // Die Funktion gibt true zurück, wenn der Wert OK ist, sonst false.
+        static public bool PruefeInteger(string InputString, int Untergrenze, int Obergrenze, out int Wert)
+        {
+            bool DatenOk = Int32.TryParse(InputString, out Wert);
+            if ((DatenOk == false) || (Wert < Untergrenze) || (Wert > Obergrenze))
+            {
+                DatenOk = false;
+            }
+            return DatenOk;
+        }
+
     }
 }

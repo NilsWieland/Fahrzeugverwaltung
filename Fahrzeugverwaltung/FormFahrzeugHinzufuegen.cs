@@ -25,7 +25,8 @@ namespace Fahrzeugverwaltung
         {
             AlleDatenOK = new bool[8];
 
-            // Initalieren Form
+            // Initialisiere alle Elemente des Dialogs
+            // Der Inhalt dieser Funktion wird von Visual Studio erzeugt und soll nicht mauell verändert werden
             InitializeComponent();
 
             // Wähle PKW als Fahrzeugtyp (Voreinstellung, kann geändert werden)
@@ -119,7 +120,7 @@ namespace Fahrzeugverwaltung
             }
         }
 
-        // Speichert alle Daten und schliest Dialog
+        // Speichert alle Daten, Dialogfenster wird anschliesen geschlossen
         private void buttonUebernehmen_Click(object sender, EventArgs e)
         {
             string Hersteller;
@@ -269,6 +270,7 @@ namespace Fahrzeugverwaltung
             {
                 textBoxErstzulassung.BackColor = System.Drawing.SystemColors.Window;
             }
+
             else
             {
                 textBoxErstzulassung.BackColor = System.Drawing.Color.LightCoral;
