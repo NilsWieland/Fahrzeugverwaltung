@@ -169,6 +169,14 @@ namespace Fahrzeugverwaltung
             
             // Neues Parkhaus mit eingegebenen Daten erzeugen
             Parkhaus = new Parkhaus(ParkhausNummer, AnzahlStellplaetze, PLZ, Ort, Strasse);
+
+            // Zwischenlösung bis Stellplatztypen geändert werden können
+            // 5% der Stellplätze werden Motorrad bzw. LKW-Stellplätze
+            for (int iStellplatz = 0; iStellplatz < AnzahlStellplaetze/20; iStellplatz++)
+            {
+                Parkhaus.StellPlaetze[iStellplatz].Typ = "Motorrad";
+                Parkhaus.StellPlaetze[(AnzahlStellplaetze / 20) + iStellplatz].Typ = "LKW";
+            }
         }
 
         // Aktualisiert OK Button wenn alle Daten in Ordnung sind, d.h.

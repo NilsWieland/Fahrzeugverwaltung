@@ -150,49 +150,59 @@ namespace Fahrzeugverwaltung
             }
         }
 
+
         // Lädt die Daten aller Parkhäuser aus einer Datei
         private void LadenParkhaueser()
         {
-            // Laden der Parkhäuser aus einer Datei ist noch nicht implementiert.
-            // Parkhaus wird einfach erzeugt und zur Liste hinzugefügt.
+            string Textzeile;
 
-            Parkhaeuser.Add(new Parkhaus(1, 320, "51105", "Köln", "Westerwaldstr. 99"));
+            // Öffne Textdatei zum Lesen
+            // Hier fehlt noch die Fehlerbehandlung, falls Datei nicht geöffnet werden kann
+            System.IO.StreamReader file = new System.IO.StreamReader(@"Parkhaeuser.txt");
 
-            // Hach dem Erzeugen des Parkhaus sind alle Stellplätze als PKW-Stellplätze voreingestellt
-            // Erzeuge 5 Motorradstellplätze
-            Parkhaeuser[0].StellPlaetze[199].Typ = "Motorrad";
-            Parkhaeuser[0].StellPlaetze[200].Typ = "Motorrad";
-            Parkhaeuser[0].StellPlaetze[201].Typ = "Motorrad";
-            Parkhaeuser[0].StellPlaetze[202].Typ = "Motorrad";
-            Parkhaeuser[0].StellPlaetze[203].Typ = "Motorrad";
+            // Schleife bis alle Textzeilen gelesen wurden
+            while ((Textzeile = file.ReadLine()) != null)
+            {
+                // Prüfe Datenzeile und erzeuge Parkhaus, wenn Datenzeile OK ist.
+                // Die Funktion Parkhaus.ErzeugeParkhaus gibt ein Parkhaus-Objekt zurück, 
+                // wenn die Datenzeile Ok ist, sonst wird null zurückgegeben.
+                Parkhaus ph = Parkhaus.ErzeugeParkhaus(Textzeile);
+                if (ph != null)
+                {
+                    // Datenzeile war OK und Parkhaus wurde erzeugt
+                    // Füge Parkhaus zur Parkhausliste hinzu
+                    Parkhaeuser.Add(ph);
+                }
+            }
 
-            // Erzeuge 5 LKW-Stellplätze
-            Parkhaeuser[0].StellPlaetze[299].Typ = "LKW";
-            Parkhaeuser[0].StellPlaetze[300].Typ = "LKW";
-            Parkhaeuser[0].StellPlaetze[301].Typ = "LKW";
-            Parkhaeuser[0].StellPlaetze[302].Typ = "LKW";
-            Parkhaeuser[0].StellPlaetze[303].Typ = "LKW";
-
-            // Erzeuge 2. Parkhaus
-            Parkhaeuser.Add(new Parkhaus(2, 200, "51105", "Köln", "Neumarkt. 99"));
-
-            // Hach dem Erzeugen des Parkhaus sind alle Stellplätze als PKW-Stellplätze voreingestellt
-            // Erzeuge 5 Motorradstellplätze
-            Parkhaeuser[1].StellPlaetze[150].Typ = "Motorrad";
-            Parkhaeuser[1].StellPlaetze[151].Typ = "Motorrad";
-            Parkhaeuser[1].StellPlaetze[152].Typ = "Motorrad";
-            Parkhaeuser[1].StellPlaetze[153].Typ = "Motorrad";
-            Parkhaeuser[1].StellPlaetze[154].Typ = "Motorrad";
+            // Schliesse Datei nachdem alle Daten gelesen wurden
+            file.Close();
         }
 
         // Speichert die Daten aller Parkhäuser in einer Datei
+        // Die Daten eines Parkhauses sind in einer Zeile gespeichert
+        // Die einzelnen Daten eines Parkhauses sind durch das Zeichen ; getrennt
         private void SpeichernParkhaueser()
         {
-            // Speichern der Parkhäuser ist noch nicht implementiert
+            // Öffne Datei zum Schreiben der Parkhausdaten
+            System.IO.StreamWriter file = new System.IO.StreamWriter("Parkhaeuser.txt");
+
+            // Schleife über alle Parkhaeuser
+            for (int ii = 0; ii < AnzahlParkhaeuser; ii++)
+            {
+                // Hole Parkhausobjekt aus der Parkhausliste
+                Parkhaus ph = ParkhausGet(ii);
+
+                // Wandle Parkhausobjekt in String und speichere diesen als Textzeile in Datei
+                file.WriteLine(ph.ToString());
+            }
+
+            // Schliesse Datei nachdem alle Daten geschrieben wurden
+            file.Close();
         }
 
         // Speichert die Daten aller Fahrzeug in einer Datei
-        // Die Daten jedes Fahrzeugs sind in einer Zeile gespeichert
+        // Die Daten eines Fahrzeugs sind in einer Zeile gespeichert
         // Die einzelnen Daten eines Fahrzeuges sind durch das Zeichen ; getrennt
         // z.B "PKW; VW; Käfer; 1965; 9999; K-GS-01; 1; 11; 1000; 30; 1"
         private void SpeichernFahrzeuge()
@@ -200,7 +210,7 @@ namespace Fahrzeugverwaltung
             // Öffne Datei zum Schreiben der Fahrzeugdaten
             System.IO.StreamWriter file = new System.IO.StreamWriter("Fahrzeuge.txt");
 
-            // Füge die Daten aller Fahrzeuge zum Listview hinzu 
+            // Schleife über alle Fahrzeuge
             for (int ii = 0; ii < AnzahlFahrzeuge; ii++)
             {
                 // Hole Fahrzeugobjekt aus der Fahrzeugliste

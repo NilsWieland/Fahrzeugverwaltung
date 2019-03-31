@@ -80,6 +80,31 @@ namespace Fahrzeugverwaltung
             return StellplatzZaehler;
         }
 
+        // Gibt einen String zurück, der alle Daten des Parkhaus-Objektes in einer Textzeile enthält. 
+        // Die einzelnen Datenelemente sind durch das Zeichen ";" voneinander getrennt
+        public override String ToString()
+        {
+            string ParkhausDaten = ParkhausNummer + ";" + Ort + ";" + PLZ + ";" + Strasse;
+
+            for (int index = 0; index < AnzahlStellplaetze; index++)
+            {
+                if (StellPlaetze[index].Typ == "LKW")
+                {
+                    ParkhausDaten += ";L";
+                }
+                else if (StellPlaetze[index].Typ == "Motorrad")
+                {
+                    ParkhausDaten += ";M";
+                }
+                else
+                {
+                    ParkhausDaten += ";P";
+                }
+            }
+
+            return ParkhausDaten;
+        }
+
         // Prüfe und kopiere Ort
         public static bool TextToOrt(string Text, out string Ort)
         {
@@ -147,7 +172,6 @@ namespace Fahrzeugverwaltung
                 PLZ = "";
             }
             return DatenOk;
-
         }
 
         // Prüfe und kopiere Anzahl der Stellplätze
@@ -156,6 +180,14 @@ namespace Fahrzeugverwaltung
             // PLZ muss zwischen 10000 und 99999 liegen
             return PruefeInteger(Text, 1, 1000, out AnzahlStellplaetze);
         }
+
+        // Prüfe und kopiere Parkhausnummer
+        public static bool TextToParkhausnummer(string Text, out int Parkhausnummer)
+        {
+            // Parkhausnummer muss zwischen 1 und 100 liegen
+            return PruefeInteger(Text, 1, 100, out Parkhausnummer);
+        }
+
 
         // Wandelt String in int-Wert um und prüft Wertebereich.
         // Die Funktion gibt true zurück, wenn der Wert OK ist, sonst false.
@@ -167,6 +199,86 @@ namespace Fahrzeugverwaltung
                 DatenOk = false;
             }
             return DatenOk;
+        }
+
+        // Erzeugt ein Parkhaus Objekt aus einer Datenzeile. 
+        // Die Datenzeile wird geprüft. 
+        // Sind die Daten OK wird ein Parkhausobjekt erzeugt und zurückgegeben.
+        // Sind die Daten nicht OK wird kein Parkhausobjekt erzeugt und es wird null zurückgegeben.
+        // Jede Datenzeile muss folgendermassen aufgebaut sein
+        // <Parkhausnummer>;<Ort>;<PLZ>;<Strasse>;<Typ Stellplatz 1>;<Typ Stellplatz 2>; .... <Typ Stellplatz N>
+        // Beispiel: 1;Köln;51105;Westerwaldstr. 99;P;P;P;P;P;P;P
+        public static Parkhaus ErzeugeParkhaus(
+            string Datenzeile)
+        {
+            Parkhaus ph = null;
+
+            int Parkhausnummer = 0;
+            string Ort = "";
+            string PLZ = "";
+            string Strasse = "";
+            int AnzahlStellplaetze = 0;
+
+            bool DatenOk = true;
+
+            string[] DataArray = Datenzeile.Split(';');
+
+            // 4 Datenelemente (Nummer, Ort, PLZ, Strasse), dann nur noch Stellplatztypen
+            AnzahlStellplaetze = DataArray.Length - 4;
+
+            // Prüfe und kopiere Parkhausnummer
+            if (DatenOk)
+            {
+                DatenOk = TextToParkhausnummer(DataArray[0], out Parkhausnummer);
+            }
+
+            // Prüfe und kopiere Ort
+            if (DatenOk)
+            {
+                DatenOk = TextToOrt(DataArray[1], out Ort);
+            }
+
+            // Prüfe und kopiere PLZ
+            if (DatenOk)
+            {
+                DatenOk = TextToPLZ(DataArray[2], out PLZ);
+            }
+
+            // Prüfe und kopiere Strasse
+            if (DatenOk)
+            {
+                DatenOk = TextToStrasse(DataArray[3], out Strasse);
+            }
+
+            if (DatenOk)
+            {
+                // Erzeuge Parkhaus mit Stellplätzen
+                ph = new Parkhaus(Parkhausnummer, AnzahlStellplaetze, PLZ, Ort, Strasse);
+
+                // Setze Stellplatztyp für alle Stellplätze
+                // In der Datenzeile steht 
+                //   L für LKW
+                //   M für Motorrad
+                //   alle anderen Werte für PKW
+                for (int iStellplatz = 0; iStellplatz < ph.AnzahlStellplaetze; iStellplatz++)
+                {
+                    Stellplatz sp = ph.StellPlaetze[iStellplatz];
+                    if (DataArray[4 + iStellplatz] == "L")
+                    {
+                        ph.StellPlaetze[iStellplatz].Typ = "LKW";
+                    }
+                    else if (DataArray[4 + iStellplatz] == "M")
+                    {
+                        ph.StellPlaetze[iStellplatz].Typ = "Motorrad";
+                    }
+                    else
+                    {
+                        ph.StellPlaetze[iStellplatz].Typ = "PKW";
+                    }
+                }
+            }
+
+            return ph;
         }
 
     }

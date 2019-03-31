@@ -57,7 +57,7 @@ namespace Fahrzeugverwaltung
         }
 
         // Gibt einen String zurück, der alle Daten des Fahreug Objektes in einer Textzeile enthält. 
-        // Die einzelnen Datenelemente sind durch das Zeichen ";" coneinander getrennt
+        // Die einzelnen Datenelemente sind durch das Zeichen ";" voneinander getrennt
         public override String ToString()
         {
             return
